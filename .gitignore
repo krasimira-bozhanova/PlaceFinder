@@ -1,2 +1,2 @@
-./db/development.db
-./database.log
+db/development.db
+database.log

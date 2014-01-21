@@ -43,19 +43,19 @@ require "active_record"
 
 namespace :db do
 
-  db_config       = YAML::load(File.open('db/config/database.yml'))
-  db_config_admin = db_config.merge({'database' => 'sqlite3', 'schema_search_path' => 'public'})
+  db_config = YAML::load(File.open('db/config/database.yml'))
+  environment = ENV['environment'] || 'development'
 
   desc "Create the database"
   task :create do
-    ActiveRecord::Base.establish_connection(db_config_admin)
-    ActiveRecord::Base.connection.create_database(db_config["database"])
+    ActiveRecord::Base.establish_connection(db_config[environment])
+    #ActiveRecord::Base.connection.create_database(db_config["database"])
     puts "Database created."
   end
 
   desc "Migrate the database"
   task :migrate do
-    ActiveRecord::Base.establish_connection(db_config)
+    ActiveRecord::Base.establish_connection(db_config[environment])
     ActiveRecord::Migrator.migrate("db/migrate/")
     Rake::Task["db:schema"].invoke
     puts "Database migrated."
@@ -73,7 +73,7 @@ namespace :db do
 
   desc 'Create a db/schema.rb file that is portable against any DB supported by AR'
   task :schema do
-    ActiveRecord::Base.establish_connection(db_config)
+    ActiveRecord::Base.establish_connection(db_config[environment])
     require 'active_record/schema_dumper'
     filename = "db/schema.rb"
     File.open(filename, "w:utf-8") do |file|
@@ -91,7 +91,7 @@ namespace :g do
     path = File.expand_path("../db/migrate/#{timestamp}_#{name}.rb", __FILE__)
     migration_class = name.split("_").map(&:capitalize).join
 
-     File.open(path, 'w')
+    File.open(path, 'w')
 
     puts "Migration #{path} created"
     abort # needed stop other tasks

@@ -1,13 +1,9 @@
-adapter: sqlite3
-encoding: utf-8
-database: /home/milan/PlaceFinder/db/development.db
+development:
+    adapter: sqlite3
+    encoding: utf-8
+    database: /home/milan/PlaceFinder/db/development.db
 
-# production:
-#   adapter: sqlite3
-#   database: /home/milan/PlaceFinder/db/production.db
-#   encoding: utf8
-
-# test: &test
-#   adapter: sqlite3
-#   database: /home/milan/PlaceFinder/db/test.db
-#   encoding: utf8
+test:
+    adapter: sqlite3
+    encoding: utf-8
+    database: /home/milan/PlaceFinder/db/test.db

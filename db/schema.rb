@@ -11,6 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20140121112425) do
+
+  create_table "comments", force: true do |t|
+    t.integer "place_id", null: false
+    t.integer "user_id",  null: false
+    t.text    "comment"
+  end
+
+  create_table "favourites", force: true do |t|
+    t.integer "user_id",  null: false
+    t.integer "place_id", null: false
+  end
+
+  create_table "pictures", force: true do |t|
+    t.integer "place_id", null: false
+    t.binary  "picture"
+  end
+
+  create_table "places", force: true do |t|
+    t.string "name",        null: false
+    t.text   "description"
+    t.string "address",     null: false
+    t.string "type",        null: false
+    t.string "user_rating"
+  end
+
+  create_table "users", force: true do |t|
+    t.string "username", null: false
+    t.string "name",     null: false
+    t.string "password", null: false
+  end
 
 end
