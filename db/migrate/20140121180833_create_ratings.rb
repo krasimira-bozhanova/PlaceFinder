@@ -3,7 +3,7 @@ class CreateRatings < ActiveRecord::Migration
     create_table :ratings do |t|
       t.integer :place_id, :null => false
       t.integer :user_id,  :null => false
-      t.float  :value,    :null => false
+      t.float   :value,    :null => false
     end
   end
 

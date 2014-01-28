@@ -1,45 +1,11 @@
-#require 'sinatra/activerecord/rake'
+require "active_record"
 
-# namespace :db do
-#   task :environment do
-#     require 'active_record'
-#     ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database =>  'db/test.sqlite3.db'
-#   end
-
-#   desc "Migrate the database"
-#   task(:migrate => :environment) do
-#     ActiveRecord::Base.logger = Logger.new(STDOUT)
-#     ActiveRecord::Migration.verbose = true
-#     ActiveRecord::Migrator.migrate("db/migrate")
-#   end
-# end
-
-# require 'active_record'
-# require 'yaml'
-
-# task :default => :migrate
-
-# desc "Migrate the database through scripts in db/migrate. Target specific version with VERSION=x"
-# task :migrate => :environment do
-#   ActiveRecord::Migrator.migrate('db/migrate', ENV["VERSION"] ? ENV["VERSION"].to_i : nil )
-# end
-
-# task :environment do
-#   #ActiveRecord::Base.establish_connection(YAML::load(File.open('database.yml')))
-#   ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database =>  'db/test.sqlite3.db'
-#   ActiveRecord::Base.logger = Logger.new(File.open('database.log', 'a'))
-# end
-
-
-
-# $ rake db:create # create the db
+# $ rake db:connect # connect to the db
 # $ rake db:migrate # run migrations
 # $ rake db:drop # delete the db
 # $ rake db:reset # combination of the upper three
 # $ rake db:schema # creates a schema file of the current database
 # $ rake g:migration your_migration # generates a new migration file
-
-require "active_record"
 
 namespace :db do
 
@@ -47,9 +13,9 @@ namespace :db do
   environment = ENV['environment'] || 'development'
 
   desc "Create the database"
-  task :create do
+  task :connect do
     ActiveRecord::Base.establish_connection(db_config[environment])
-    #ActiveRecord::Base.connection.create_database(db_config["database"])
+    #ActiveRecord::Base.connection.create_database(db_config[environment])
     puts "Database created."
   end
 
@@ -63,8 +29,8 @@ namespace :db do
 
   desc "Drop the database"
   task :drop do
-    ActiveRecord::Base.establish_connection(db_config_admin)
-    ActiveRecord::Base.connection.drop_database(db_config["database"])
+    ActiveRecord::Base.establish_connection(db_config[environment])
+    ActiveRecord::Base.connection.drop_database(db_config[environment])
     puts "Database deleted."
   end
 
@@ -98,3 +64,20 @@ namespace :g do
   end
 end
 
+namespace :tests do
+  desc 'Starts watchr'
+  task :watch do
+    system 'watchr watchr.rb'
+  end
+
+  require 'rspec/core'
+  require 'rspec/core/rake_task'
+  desc 'Run unit specs'
+  task :start do
+    puts "In task"
+    RSpec::Core::RakeTask.new('unit') do |t|
+      # t.ruby_opts = '-w'
+      t.pattern = FileList['spec/placefinder/*_spec.rb']
+    end
+  end
+end

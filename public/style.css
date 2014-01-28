@@ -1,6 +1,6 @@
 <!--
 
-/* 
+/*
 © 2008 - Design, CSS Style by P&B Creations, pbcreations.sk
 © 2008 - Martin Plakinger (CEO)
 */
@@ -38,15 +38,15 @@ input {
 	margin-top:18px;
 }
 
-div.wrap1 {
-	width: 858px;
+div.wrap1 { /* 858 */
+	width: 1000px;
 	margin: 0 auto;
 	overflow: hidden;
 	border:1px solid #c3c3c3;
 }
 
 div.wrap1 .wrap2 {
-	width: 856px;
+	width: 998px;  /* 856 */
 	background-repeat:repeat-y;
 	border: 1px solid #FFFFFF;
 	margin: 0 auto;
@@ -54,11 +54,12 @@ div.wrap1 .wrap2 {
 }
 
 div.wrap2 .logo {
-	width:796px;
+	width:938px; /* 796 */
 	height:61px;
 	padding:0px;
 	margin:0 auto;
 	background-image: url("img/logo.png");
+	background-size:1000px 120px;
 	background-repeat:no-repeat;
 	color:#FFFFFF;
 	font-size:22px;
@@ -68,24 +69,25 @@ div.wrap2 .logo {
 
 div.logo .slogan {
 	font-size:9px;
-	font-weight:normal;
+	font-weight:normal; /* normal */
 	margin-top:3px;
 }
 
 div.info, div.info1 {
-	width:816px;
+	width:958px;  /* 816 */
 	line-height:40px;
 	background-color:#FFFFFF;
 	padding-left:20px;
 	padding-right:20px;
 	background-image:url(img/info.gif);
+	background-size:1000px 120px;
 	background-repeat:repeat-x;
 }
 
-div.info1 { 
+div.info1 {
 	background-image:url(img/info1.gif);
-	float:left; 
-	border-top:1px solid #fff; 
+	float:left;
+	border-top:1px solid #fff;
 	background-color:#e4e4e4;
 	color:#999;
 }
@@ -101,7 +103,7 @@ div.wrap2 .leftpanel, div.wrap2 .rightpanel {
 }
 
 div.wrap2 .mainpanel {
-	width:456px;
+	width:598px;  /* 456 */
 	float:left;
 }
 
@@ -125,14 +127,14 @@ div.leftpanel .header, div.rightpanel .header {
 .text_ img { vertical-align:middle; border:0; }
 
 span.divider {
-	border-bottom:1px dashed #333333; 
-	padding-bottom:5px; 
-	margin-bottom:5px; 
+	border-bottom:1px dashed #333333;
+	padding-bottom:5px;
+	margin-bottom:5px;
 	display:block;
 }
 
 div.rightpanel .inquiry, div.leftpanel .inquiry {
-	padding:8px; 
+	padding:8px;
 	text-align:justify;
 }
 

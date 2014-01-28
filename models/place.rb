@@ -9,6 +9,7 @@ class Place < ActiveRecord::Base
                  :address => address,
                  :type => type,
                  :description => description)
+      end
     end
 
     def get_place(name:, address:, type:, description: nil)
@@ -17,6 +18,7 @@ class Place < ActiveRecord::Base
                  :address => address,
                  :type => type,
                  :description => description)
+      end
     end
 
   end

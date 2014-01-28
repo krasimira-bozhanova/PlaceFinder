@@ -1,5 +1,4 @@
-require 'active_record'
-require '../db/connect'
+require_relative '../db/connect'
 
 
 class Address < ActiveRecord::Base
@@ -25,15 +24,3 @@ class Address < ActiveRecord::Base
 
   end
 end
-
-new_address = Address.add_address(:address => {
-  :zhk => 'Izgrev',
-  :street => 'Some street',
-  :street_number => '1',
-  })
-
-puts new_address.inspect
-Address.add_place_id_to_address(1, new_address.id)
-a = Address.get_address_by_place_id(1)
-
-puts a.inspect

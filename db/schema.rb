@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140121112425) do
+ActiveRecord::Schema.define(version: 20140128103545) do
+
+  create_table "addresses", force: true do |t|
+    t.string  "zhk",           null: false
+    t.string  "street",        null: false
+    t.integer "street_number", null: false
+    t.integer "place_id"
+  end
 
   create_table "comments", force: true do |t|
     t.integer "place_id", null: false
@@ -30,17 +37,28 @@ ActiveRecord::Schema.define(version: 20140121112425) do
   end
 
   create_table "places", force: true do |t|
-    t.string "name",        null: false
-    t.text   "description"
-    t.string "address",     null: false
-    t.string "type",        null: false
-    t.string "user_rating"
+    t.string  "name",        null: false
+    t.text    "description"
+    t.integer "type_id",     null: false
+    t.string  "user_rating"
+  end
+
+  create_table "ratings", force: true do |t|
+    t.integer "place_id", null: false
+    t.integer "user_id",  null: false
+    t.float   "value",    null: false
+  end
+
+  create_table "types", force: true do |t|
+    t.string "name", null: false
   end
 
   create_table "users", force: true do |t|
-    t.string "username", null: false
-    t.string "name",     null: false
-    t.string "password", null: false
+    t.string  "username",  null: false
+    t.string  "name",      null: false
+    t.string  "password",  null: false
+    t.boolean "signed_in", null: false
+    t.boolean "admin",     null: false
   end
 
 end
