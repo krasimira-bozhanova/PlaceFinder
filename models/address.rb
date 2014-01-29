@@ -1,6 +1,5 @@
 require_relative '../db/connect'
 
-
 class Address < ActiveRecord::Base
 
   class << self

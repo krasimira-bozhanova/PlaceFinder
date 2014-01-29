@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require_relative '../models/user'
 
 class MyApp < Sinatra::Base
   set :root, File.join(File.dirname(__FILE__), '..')
@@ -18,7 +19,14 @@ class MyApp < Sinatra::Base
   end
 
   post "/gag" do
-    puts params[:username], params[:password]
-    erb :my_try
+    puts "In post"
+    if User.login params[:username], params[:password]
+      puts "Login!!"
+      @name = User.name_from_username params[:username]
+      puts @name
+      erb :signed_in
+    else
+      erb :home
+    end
   end
 end

@@ -19,9 +19,17 @@ namespace :db do
     puts "Database created."
   end
 
-  desc "Migrate the database"
+  desc "Migrate the development database"
   task :migrate do
-    ActiveRecord::Base.establish_connection(db_config[environment])
+    ActiveRecord::Base.establish_connection(db_config['development'])
+    ActiveRecord::Migrator.migrate("db/migrate/")
+    Rake::Task["db:schema"].invoke
+    puts "Database migrated."
+  end
+
+  desc "Migrate the test database"
+  task :test_migrate do
+    ActiveRecord::Base.establish_connection(db_config['test'])
     ActiveRecord::Migrator.migrate("db/migrate/")
     Rake::Task["db:schema"].invoke
     puts "Database migrated."

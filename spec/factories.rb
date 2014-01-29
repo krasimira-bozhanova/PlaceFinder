@@ -8,6 +8,8 @@ FactoryGirl.define do
     username 'username'
     password Digest::SHA1.hexdigest('password')
     name 'Some User'
+    login false
+    admin false
   end
 
   factory :type, class: Type do

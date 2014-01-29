@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20140128103545) do
   create_table "comments", force: true do |t|
     t.integer "place_id", null: false
     t.integer "user_id",  null: false
-    t.text    "comment"
+    t.text    "comment",  null: false
   end
 
   create_table "favourites", force: true do |t|
@@ -54,11 +54,11 @@ ActiveRecord::Schema.define(version: 20140128103545) do
   end
 
   create_table "users", force: true do |t|
-    t.string  "username",  null: false
-    t.string  "name",      null: false
-    t.string  "password",  null: false
-    t.boolean "signed_in", null: false
-    t.boolean "admin",     null: false
+    t.string  "username", null: false
+    t.string  "name",     null: false
+    t.string  "password", null: false
+    t.boolean "login",    null: false
+    t.boolean "admin",    null: false
   end
 
 end
