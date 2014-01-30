@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
     end
 
     def get_current_user
-    	where(:login => true)
+      where(:login => true)
     end
 
     def get_id_from_username(username)
@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
       user.nil? ? 0 : user.id
     end
 
-		def login(username, password)
+    def login(username, password)
       if validate_input_login username, password
         encrypted_password = Digest::SHA1.hexdigest(password)
         if exists?(:username => username, :password => encrypted_password)
@@ -52,6 +52,14 @@ class User < ActiveRecord::Base
 
     def name_from_username(username)
       where(:username => username).map { |user| user.attributes['name'] }.first
+    end
+
+    def has_current_user
+      not where(:login => true).nil?
+    end
+
+    def get_current_user_name
+      where(:login => true).map { |user| user.name }.first
     end
 
   end

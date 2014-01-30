@@ -1,10 +1,11 @@
 class CreatePlaces < ActiveRecord::Migration
   def up
     create_table(:places) do |t|
-      t.string  :name,         :null => false
+      t.string  :name,        :null => false
       t.text    :description
       t.integer :type_id,     :null => false
       t.string  :user_rating
+      t.integer :address_id,  :null => false
     end
   end
 

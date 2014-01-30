@@ -39,7 +39,17 @@ input {
 	background-image:url("img/input.gif");
 	background-repeat: repeat-x;
 	border:1px solid #a66347;
-	width:140px;
+	width:150px;
+	padding:3px;
+	margin-top:18px;
+}
+
+input[type="file"] {
+	background-color: #fff;
+	background-image:url("img/input.gif");
+	background-repeat: repeat-x;
+	border:1px solid #a66347;
+	width:220px;
 	padding:3px;
 	margin-top:18px;
 }

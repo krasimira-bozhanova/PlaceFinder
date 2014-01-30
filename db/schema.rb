@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(version: 20140128103545) do
   end
 
   create_table "pictures", force: true do |t|
-    t.integer "place_id", null: false
-    t.binary  "picture"
+    t.integer "place_id",     null: false
+    t.string  "picture_path"
   end
 
   create_table "places", force: true do |t|
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20140128103545) do
     t.text    "description"
     t.integer "type_id",     null: false
     t.string  "user_rating"
+    t.integer "address_id",  null: false
   end
 
   create_table "ratings", force: true do |t|
