@@ -1,5 +1,3 @@
-require 'active_record'
-
 class Type < ActiveRecord::Base
 
   class << self

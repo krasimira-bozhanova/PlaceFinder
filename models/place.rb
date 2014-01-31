@@ -19,7 +19,13 @@ class Place < ActiveRecord::Base
 
     end
 
-    def get_places_with_highest_rating(number)
+    def get_place_by_id(place_id)
+      where(:id => place_id)
+    end
+
+    def get_places_with_highest_ratings(number)
+      ids = Rating.get_place_ids_with_highest_rating(number).map(&:last)
+      ids.map { |id| get_place_by_id id }
     end
 
   end

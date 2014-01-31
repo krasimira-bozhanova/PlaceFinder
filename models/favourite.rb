@@ -1,6 +1,4 @@
-require_relative '../db/connect'
-
-class Favourites < ActiveRecord::Base
+class Favourite < ActiveRecord::Base
   class << self
 
     def add_favourite(user_id, place_id)
@@ -17,5 +15,7 @@ class Favourites < ActiveRecord::Base
     def remove_favourite(user_id, place_id)
       where(["user_id = ? AND place_id = ?", user_id, place_id]).destroy_all
     end
+
+    def 
   end
 end

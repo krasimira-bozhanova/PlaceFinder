@@ -1,4 +1,3 @@
-require_relative '../db/connect'
 require 'digest/sha1'
 
 class User < ActiveRecord::Base

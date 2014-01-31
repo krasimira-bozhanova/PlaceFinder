@@ -47,4 +47,30 @@ describe "rating" do
     end
   end
 
+  describe "get_place_ids_with_highest_rating" do
+    it "Selects as many places as said" do
+      Rating.add_rating(:user_id => 1, :place_id => 1, :value => 5)
+      Rating.add_rating(:user_id => 1, :place_id => 2, :value => 5)
+      Rating.add_rating(:user_id => 2, :place_id => 3, :value => 4)
+      Rating.add_rating(:user_id => 1, :place_id => 4, :value => 4.5)
+      Rating.get_place_ids_with_highest_rating(2).size.should eq 2
+    end
+
+    it "Selects the right places" do
+      Rating.add_rating(:user_id => 1, :place_id => 1, :value => 5)
+      Rating.add_rating(:user_id => 1, :place_id => 2, :value => 5)
+      Rating.add_rating(:user_id => 2, :place_id => 3, :value => 4)
+      Rating.add_rating(:user_id => 1, :place_id => 4, :value => 4.5)
+      Rating.get_place_ids_with_highest_rating(2).should eq [[1, 5.0], [2, 5.0]]
+    end
+
+    it "Selects the right places2" do
+      Rating.add_rating(:user_id => 1, :place_id => 1, :value => 5)
+      Rating.add_rating(:user_id => 1, :place_id => 2, :value => 5)
+      Rating.add_rating(:user_id => 2, :place_id => 3, :value => 4)
+      Rating.add_rating(:user_id => 1, :place_id => 4, :value => 4.5)
+      Rating.get_place_ids_with_highest_rating(3).should eq [[1, 5.0], [2, 5.0], [4, 4.5]]
+    end
+  end
+
 end

@@ -1,5 +1,3 @@
-require_relative '../db/connect'
-
 class Picture < ActiveRecord::Base
   class << self
 
