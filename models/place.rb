@@ -18,5 +18,9 @@ class Place < ActiveRecord::Base
             :type_id => type_id).first
 
     end
+
+    def get_places_with_highest_rating(number)
+    end
+
   end
 end

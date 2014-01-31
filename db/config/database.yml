@@ -1,9 +1,9 @@
 development:
     adapter: sqlite3
     encoding: utf-8
-    database: /home/milan/krasi/PlaceFinder/db/development.db
+    database: /home/krasimira/Ruby/PlaceFinder/db/development.db
 
 test:
     adapter: sqlite3
     encoding: utf-8
-    database: /home/milan/krasi/PlaceFinder/db/test.db
+    database: /home/krasimira/Ruby/PlaceFinder/db/test.db
