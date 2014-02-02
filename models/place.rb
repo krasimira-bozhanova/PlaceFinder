@@ -15,17 +15,21 @@ class Place < ActiveRecord::Base
     def get_place(name:, address_id:, type_id:)
       where(:name => name,
             :address_id => address_id,
-            :type_id => type_id).first
+            :type_id => type_id).map(&:attributes).first
 
     end
 
     def get_place_by_id(place_id)
-      where(:id => place_id)
+      where(:id => place_id).map(&:attributes).first
     end
 
     def get_places_with_highest_ratings(number)
       ids = Rating.get_place_ids_with_highest_rating(number).map(&:last)
       ids.map { |id| get_place_by_id id }
+    end
+
+    def get_all_places_with_type(type_id)
+      where(:type_id => type_id).map(&:attributes)
     end
 
   end

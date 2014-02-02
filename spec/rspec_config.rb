@@ -5,11 +5,12 @@ puts "In rspec_config"
 
 RSpec.configure do |config|
 
-  config.before(:each) do
-    DatabaseCleaner.start
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.after(:each) do
+  config.around(:each) do |example|
     DatabaseCleaner.clean
   end
 end

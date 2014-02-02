@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
     def add_user(username:, password:, name:)
       unless [username, password, name].any?(&:empty?)
         create(:username => username,
-               :password => password,
+               :password => Digest::SHA1.hexdigest(password),
                :name => name,
                :login => false,
                :admin => false)
@@ -14,7 +14,9 @@ class User < ActiveRecord::Base
     end
 
     def get_current_user
-      where(:login => true)
+      a = where(:login => true).map { |user| user.attributes }.first
+      puts a.inspect
+      a
     end
 
     def get_id_from_username(username)
@@ -35,7 +37,7 @@ class User < ActiveRecord::Base
     end
 
     def logout
-      update(get_current_user.id, :login => false)
+      update(get_current_user['id'], :login => false)
     end
 
     def get_favourite_places_for_user
@@ -53,12 +55,12 @@ class User < ActiveRecord::Base
       where(:username => username).map { |user| user.attributes['name'] }.first
     end
 
-    def has_current_user
-      not where(:login => true).nil?
+    def is_there_current_user
+      not where(:login => true).empty?
     end
 
     def get_current_user_name
-      where(:login => true).map { |user| user.name }.first
+      get_current_user["name"]
     end
 
   end

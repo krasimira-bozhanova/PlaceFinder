@@ -55,14 +55,14 @@ input[type="file"] {
 }
 
 div.wrap1 { /* 858 */
-	width: 1000px;
+	width: 858px;
 	margin: 0 auto;
 	overflow: hidden;
 	border:1px solid #c3c3c3;
 }
 
 div.wrap1 .wrap2 {
-	width: 998px;  /* 856 */
+	width: 856;  /* 856 */
 	background-repeat:repeat-y;
 	border: 1px solid #FFFFFF;
 	margin: 0 auto;
@@ -70,7 +70,7 @@ div.wrap1 .wrap2 {
 }
 
 div.wrap2 .logo {
-	width:938px; /* 796 */
+	width:796; /* 796 */
 	height:61px;
 	padding:0px;
 	margin:0 auto;
@@ -90,7 +90,7 @@ div.logo .slogan {
 }
 
 div.info, div.info1 {
-	width:958px;  /* 816 */
+	width:816px;  /* 816 */
 	line-height:40px;
 	background-color:#FFFFFF;
 	padding-left:20px;
@@ -112,18 +112,18 @@ div.info1 a, div.info1 a:link, div.info1 a:visited { color:#999; }
 
 div.info1 a:hover { color: #666; }
 
-div.wrap2 .leftpanel, div.wrap2 .rightpanel {
+div.wrap2 .leftpanel {
 	width:200px;
 	display: inline;
 	float:left;
 }
 
 div.wrap2 .mainpanel {
-	width:598px;  /* 456 */
+	width:656px;
 	float:left;
 }
 
-div.leftpanel .header, div.rightpanel .header {
+div.leftpanel .header {
 	background-image:url(img/header.png);
 	background-repeat:no-repeat;
 	width:180px;
@@ -149,11 +149,25 @@ span.divider {
 	display:block;
 }
 
-div.rightpanel .inquiry, div.leftpanel .inquiry {
+div.leftpanel .inquiry {
 	padding:8px;
 	text-align:justify;
 }
 
 .inquiry a, .inquiry a:link, .inquiry a:visited, .inquiry a:hover { text-decoration:none; }
 
--->
+
+.clearfix {
+  *zoom: 1;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both;
+}

@@ -3,8 +3,10 @@ class Favourite < ActiveRecord::Base
 
     def add_favourite(user_id, place_id)
       unless user_id < 1 or place_id < 1
-        create(:user_id => user_id,
-               :place_id => place_id)
+        unless already_favourite?(user_id, place_id)
+          create(:user_id => user_id,
+                 :place_id => place_id)
+        end
       end
     end
 
@@ -16,6 +18,8 @@ class Favourite < ActiveRecord::Base
       where(["user_id = ? AND place_id = ?", user_id, place_id]).destroy_all
     end
 
-    def 
+    def already_favourite?(user_id, place_id)
+      not where(:user_id => user_id, :place_id => place_id).empty?
+    end
   end
 end

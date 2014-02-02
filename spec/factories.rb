@@ -18,7 +18,9 @@ FactoryGirl.define do
 
   factory :place, class: Place do
     name 'Cool place'
-    type 1
+    address_id 1
+    type_id 1
+    description "Cool place"
   end
 
   # factory :address, class: Address do

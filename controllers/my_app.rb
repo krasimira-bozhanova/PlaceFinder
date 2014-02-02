@@ -1,10 +1,6 @@
 require 'sinatra/base'
 require 'rubygems'
-require_relative '../models/user'
-require_relative '../models/picture'
-require_relative '../models/address'
-require_relative '../models/type'
-require_relative '../models/place'
+require_relative '../models/placefinder'
 
 class MyApp < Sinatra::Base
   set :root, File.join(File.dirname(__FILE__), '..')
@@ -12,16 +8,26 @@ class MyApp < Sinatra::Base
   set :views, Proc.new { File.join(root, "views") }
 
   get '/' do
+    if User.login("krasi", "krasi")
+      puts "Login!!"
+    else
+      puts "no login"
+    end
     address_id = Address.get_address_id(:zhk => "Лозенец", :street => "Джеймс Баучер", :street_number => 76)
     place = Place.get_place(:name => "Табиет",
                             :address_id => address_id,
                             :type_id => 1)
-    picture = Picture.get_pictures_for_place(:place_id => place.id).first
+    picture = Picture.get_pictures_for_place(place.id).first
     @name = place.name
     @description = place.description
     @picture_path = "img/" + picture['picture_path']
-    if User.has_current_user
-      @name = User.get_current_user_name
+
+    puts "Current user:"
+    puts User.get_current_user
+
+    if User.is_there_current_user
+      puts "In if"
+      @username = User.get_current_user_name
       erb :signed_in
     else
       erb :home

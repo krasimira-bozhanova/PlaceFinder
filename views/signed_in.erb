@@ -6,22 +6,16 @@
 <link rel="stylesheet" type="text/css" media="screen, projection" href="/menu.css" />
 <link rel="stylesheet" type="text/css" media="screen, projection" href="/style.css" />
 <style type="text/css">
-<!--
-
 div.wrap1 .wrap2 {
-	/* only with left panel- background-image: url(img/bg1.gif); */
-	/* right and left panel */ background-image: url(img/bg2.gif);
-	/* only with right panel - background-image: url(img/bg3.gif); */
+	background-image: url(img/bg1.gif);
 }
-
--->
 </style>
 </head>
 <body>
 <div class="wrap1">
   <div class="wrap2">
     <div class="logo">
-      <div class="slogan">Hello, <%= @name %> </div>
+      <div class="slogan">Hello, <%= @username %> </div>
     </div>
     <div id="menu">
       <div class="menu">
@@ -56,12 +50,13 @@ div.wrap1 .wrap2 {
       </div>
       <div class="mainpanel">
         <div class="text_">
-          <h1><a href="http://www.free-css.com/">Welcome on our website!</a></h1>
-          <div class="text"><img src="img/img1.jpg" alt="" />This is a free, fully standards-compliant CSS template designed by P&amp;B Creations and supported by Tachlovice. You're pretty much free to do whatever you want with it (even use it commercially) provided you keep the links in the footer intact. The photo used is from Wallpaperstock.net. Have fun with it :)<br />
-            <br />
-            Ad has utinam senserit maiestatis. Sonet causae per no, ex vel choro eirmod alienum. Tota takimata imperdiet ea est, ut eligendi iudicabit mei. Sea probo laboramus in, paulo placerat at qui. Vix labore concludaturque ex.<br />
-            <br />
-            Cu alii movet diceret duo. Sonet causae per no, ex vel choro eirmod alienum. </div>
+          <h1><a href="http://www.free-css.com/"><%= @name %> </a></h1>
+          <div class="text">
+            <img src=<%= @picture_path %> width="140" height="120" alt="" /> <%= @description %><br />
+          </div>
+
+          <div class="clearfix"></div>
+          
           <h2><a href="http://www.free-css.com/"><img src="img/more.gif" alt="" />Read more</a> <a href="http://www.free-css.com/"><img src="img/comment.gif" alt="" />Comments (8)</a></h2>
         </div>
         <div class="text_">

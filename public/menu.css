@@ -49,7 +49,7 @@ div#menu .menu {
 		background-image:url(img/menu-central.gif);
 		background-size:900px 120px;
 		background-repeat:repeat-x;
-		height: 64px;
+		height: 58px;
 		overflow: visible;
 		position: relative;
 		bottom:15px;
@@ -84,7 +84,7 @@ div#menu .menu {
 		padding-left:45px;
 		padding-right:45px;
 	}
-/*
+
 	div#menu li span.right {
 		background-image:url(img/menu-right.gif);
 		background-repeat:no-repeat;
@@ -100,7 +100,7 @@ div#menu .menu {
 		margin-bottom: -32px;
 		float: left;
 	}
-	*/
+	
 
 	div#menu .menu a, div#menu .menu a:visited, div#menu .menu a:active {
 		color:#fff;
