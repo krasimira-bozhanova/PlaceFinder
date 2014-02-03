@@ -1,8 +1,7 @@
-class Type < ActiveRecord::Base
+class ResidentialComplex < ActiveRecord::Base
 
   class << self
-
-    def add_type(name:)
+    def add_residential_complex(name:)
       unless name.empty?
         create(:name => name)
       end

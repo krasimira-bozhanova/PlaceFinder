@@ -6,17 +6,25 @@
 <link rel="stylesheet" type="text/css" media="screen, projection" href="/menu.css" />
 <link rel="stylesheet" type="text/css" media="screen, projection" href="/style.css" />
 <style type="text/css">
+<!--
+
 div.wrap1 .wrap2 {
-	background-image: url(img/bg1.gif);
+  background-image: url(img/bg1.gif);
 }
+
+-->
 </style>
 </head>
 <body>
 <div class="wrap1">
   <div class="wrap2">
     <div class="logo">
-      <div class="slogan">Здравей, <%= @username %> </div>
-      <h3> <a href="/register">Любими</a> </h3>
+      <form action="/login" method="post">
+          <input type="text" name="username" placeholder="username">
+          <input type="text" name="password" placeholder="password">
+          <input type="submit" value = "Login">
+      </form>
+      <h3> <a href="/register">Register</a> </h3>
     </div>
     <div id="menu">
       <div class="menu">
@@ -50,28 +58,18 @@ div.wrap1 .wrap2 {
         </div>
       </div>
       <div class="mainpanel">
+        <% @result_places.each do |place| %>
         <div class="text_">
-          <h1><a href="http://www.free-css.com/"><%= @name %> </a></h1>
+          <h1><a href="http://www.free-css.com/"><%= place['name'] %> </a></h1>
           <div class="text">
-            <img src=<%= @picture_path %> width="140" height="120" alt="" /> <%= @description %><br />
+            <img src=<%= place['main_picture_path'] %> width="140" height="120" alt="" /> <%= place['description'] %><br />
           </div>
 
           <div class="clearfix"></div>
-          
+
           <h2><a href="http://www.free-css.com/"><img src="img/more.gif" alt="" />Read more</a> <a href="http://www.free-css.com/"><img src="img/comment.gif" alt="" />Comments (8)</a></h2>
         </div>
-        <div class="text_">
-          <h1><a href="http://www.free-css.com/">Sed unum qualisque idi</a></h1>
-          <div class="text"><img src="img/img1.jpg" alt="" />Sed unum qualisque id, et est reque veniam disputando. Ad eum saperet consulatu laboramus, audire percipit eu cum. Nec eu wisi delicatissimi. Ut putent fabulas civibus eam, eu mucius nostrum philosophia pro, pri an reque iuvaret vulputate. Eum ei assum sensibus iudicabit. Ad has utinam senserit maiestatis. Sonet causae per no, ex vel choro eirmod alienum. Tota takimata <a href="http://www.free-css.com/">imperdiet</a> ea est, ut eligendi iudicabit mei. Sea probo <a href="http://www.free-css.com/">laboramus</a> in, paulo placerat at qui. Vix labore concludaturque ex. Cu alii movet diceret duo. </div>
-          <h2><a href="http://www.free-css.com/"><img src="img/more.gif" alt="" />Read more</a> <a href="http://www.free-css.com/"><img src="img/comment.gif" alt="" />Comments (1)</a></h2>
-        </div>
-        <div class="text_">
-          <h1><a href="http://www.free-css.com/">His aliquip inciderint ex</a></h1>
-          <div class="text"><img src="img/img1.jpg" alt="" />His aliquip inciderint ex, meliore mediocritatem in sed, an fabulas inimicus praesent cum. Ut legendos conclusionemque vix. Ea legere tincidunt constituto has. Ut his <a href="http://www.free-css.com/">solum audire efficiendi</a>, pri postea quidam referrentur at. Ut solet mucius placerat usu, ut has dicat dolorum evertitur, at utamur partiendo has. Ex enim laudem persequeris vim.<br />
-            <br />
-            Sit an posse eruditi corrumpit. Eligendi pericula ne duo. Vix illud omnesque salutatus ne. Est in saepe civibus, oportere hendrerit scribentur eos ad. Alienum comprehensam eu mei. Te iusto integre nam, unum hendrerit eu ius. Sonet causae per no, ex vel choro eirmod alienum. Ut putent fabulas civibus eam, eu mucius nostrum philosophia pro, pri an reque iuvaret vulputate. </div>
-          <h2><a href="http://www.free-css.com/"><img src="img/more.gif" alt="" />Read more</a> <a href="http://www.free-css.com/"><img src="img/comment.gif" alt="" />Comments (21)</a></h2>
-        </div>
+        <% end %>
       </div>
 
     </div>

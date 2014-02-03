@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140128103545) do
+ActiveRecord::Schema.define(version: 20140203161700) do
 
   create_table "addresses", force: true do |t|
-    t.string  "zhk",           null: false
-    t.string  "street",        null: false
-    t.integer "street_number", null: false
+    t.integer "residential_complex_id", null: false
+    t.string  "street",                 null: false
+    t.integer "street_number",          null: false
     t.integer "place_id"
   end
 
@@ -37,17 +37,24 @@ ActiveRecord::Schema.define(version: 20140128103545) do
   end
 
   create_table "places", force: true do |t|
-    t.string  "name",        null: false
-    t.text    "description"
-    t.integer "type_id",     null: false
-    t.float   "user_rating"
-    t.integer "address_id",  null: false
+    t.string   "name",                   null: false
+    t.text     "description"
+    t.integer  "type_id",                null: false
+    t.float    "user_rating"
+    t.integer  "address_id",             null: false
+    t.datetime "date",                   null: false
+    t.integer  "residential_complex_id", null: false
+    t.string   "main_picture_path",      null: false
   end
 
   create_table "ratings", force: true do |t|
     t.integer "place_id", null: false
     t.integer "user_id",  null: false
     t.float   "value",    null: false
+  end
+
+  create_table "residential_complexes", force: true do |t|
+    t.string "name", null: false
   end
 
   create_table "types", force: true do |t|

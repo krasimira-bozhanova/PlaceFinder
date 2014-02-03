@@ -82,7 +82,7 @@ describe "User" do
 
   describe 'get_current_user_name' do
     it 'returns the correct name' do
-      user = FactoryGirl.create(:user)
+      FactoryGirl.create(:user)
       User.login('username', 'password')
       User.get_current_user_name.should eq "Some User"
     end
@@ -90,13 +90,13 @@ describe "User" do
 
   describe 'is_there_current_user' do
     it 'returns true if there is a current user' do
-      user = FactoryGirl.create(:user)
+      FactoryGirl.create(:user)
       User.login('username', 'password')
       User.is_there_current_user.should eq true
     end
 
     it 'returns false if there is not a current user' do
-      user = FactoryGirl.create(:user)
+      FactoryGirl.create(:user)
       User.is_there_current_user.should eq false
     end
   end

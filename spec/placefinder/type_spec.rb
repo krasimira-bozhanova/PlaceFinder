@@ -12,5 +12,4 @@ describe "Type" do
       end.to change(Type, :count).by(1)
     end
   end
-
 end

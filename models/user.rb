@@ -14,9 +14,7 @@ class User < ActiveRecord::Base
     end
 
     def get_current_user
-      a = where(:login => true).map { |user| user.attributes }.first
-      puts a.inspect
-      a
+      where(:login => true).map { |user| user.attributes }.first
     end
 
     def get_id_from_username(username)

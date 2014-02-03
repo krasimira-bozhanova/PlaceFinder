@@ -13,14 +13,18 @@ class MyApp < Sinatra::Base
     else
       puts "no login"
     end
-    address_id = Address.get_address_id(:zhk => "Лозенец", :street => "Джеймс Баучер", :street_number => 76)
+
+    address_id = Address.get_address_id(:residential_complex_id => 2,
+                                        :street => "Джеймс Баучер",
+                                        :street_number => 76)
     place = Place.get_place(:name => "Табиет",
                             :address_id => address_id,
                             :type_id => 1)
-    picture = Picture.get_pictures_for_place(place.id).first
-    @name = place.name
-    @description = place.description
-    @picture_path = "img/" + picture['picture_path']
+    puts place['date']
+    picture = Picture.get_pictures_for_place(place['id']).first
+    @name = place['name']
+    @description = place['description']
+    @picture_path = picture['picture_path']
 
     puts "Current user:"
     puts User.get_current_user
@@ -34,12 +38,30 @@ class MyApp < Sinatra::Base
     end
   end
 
+  get '/home' do
+    erb :home
+  end
+
+  get '/register' do
+    erb :register
+  end
+
   get '/top' do
     erb :top
   end
 
   get '/search' do
+    @type_options = Type.all
+    @residential_complex_options = ResidentialComplex.all
     erb :search
+  end
+
+  post "/search" do
+    type, zhk = [params[:type], params[:zhk]].map(&:to_i)
+    puts type, zhk
+    @result_places = Place.filter(type, zhk)
+    puts @result_places.inspect
+    erb :filtered
   end
 
   post "/login" do

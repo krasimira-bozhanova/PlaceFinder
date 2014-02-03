@@ -2,10 +2,10 @@ class Address < ActiveRecord::Base
 
   class << self
 
-    def add_address(zhk:, street:, street_number:)
-      unless [zhk, street].any?(&:empty?) or street_number < 1
+    def add_address(residential_complex_id:, street:, street_number:)
+      unless residential_complex_id < 1 or street.empty? or street_number < 1
           create(:place_id => -1,
-                 :zhk => zhk,
+                 :residential_complex_id => residential_complex_id,
                  :street => street,
                  :street_number => street_number)
       end
@@ -19,8 +19,10 @@ class Address < ActiveRecord::Base
       where(:place_id => place_id)
     end
 
-    def get_address_id(zhk:, street:, street_number:)
-      where(:zhk => zhk, :street => street, :street_number => street_number).first.id
+    def get_address_id(residential_complex_id:, street:, street_number:)
+      where(:residential_complex_id => residential_complex_id,
+            :street => street,
+            :street_number => street_number).first.id
     end
 
   end

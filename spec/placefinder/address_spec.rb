@@ -8,7 +8,7 @@ describe "Address" do
   describe "add_address" do
     it "adds an address successfully" do
       expect do
-        Address.add_address(:zhk => 'Izgrev',
+        Address.add_address(:residential_complex_id => 1,
                             :street => 'Some street',
                             :street_number => 1,
                             )
