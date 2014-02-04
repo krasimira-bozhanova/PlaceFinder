@@ -35,6 +35,10 @@ class Place < ActiveRecord::Base
       ids.map { |id| get_place_by_id id }
     end
 
+    def get_newest_places(number)
+      all.sort_by(&:date).drop(all.size - number)
+    end
+
     def get_all_places_with_type(type_id)
       where(:type_id => type_id).map(&:attributes)
     end

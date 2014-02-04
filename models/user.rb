@@ -1,4 +1,5 @@
 require 'digest/sha1'
+require_relative 'exceptions'
 
 class User < ActiveRecord::Base
   class << self
@@ -61,5 +62,22 @@ class User < ActiveRecord::Base
       get_current_user["name"]
     end
 
+    def is_username_available(username)
+      where(:username => username).empty?
+    end
+
+    def register_user(username, password, repeat_password, name)
+      if password != repeat_password
+        raise PasswordFailure, 'Грешна парола'
+      elsif [username, password, name].any?(&:empty?)
+        raise EmptyField, 'Моля, попълнете всички полета'
+      elsif not is_username_available(username)
+        raise UsernameDuplicate, 'Вече има потребител с такова потребителско име'
+      else
+        add_user(:username => username,
+                 :password => password,
+                 :name => name)
+      end
+    end
   end
 end

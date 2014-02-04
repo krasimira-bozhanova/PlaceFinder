@@ -6,25 +6,31 @@
 <link rel="stylesheet" type="text/css" media="screen, projection" href="/menu.css" />
 <link rel="stylesheet" type="text/css" media="screen, projection" href="/style.css" />
 <style type="text/css">
-<!--
+
 
 div.wrap1 .wrap2 {
   background-image: url(img/bg1.gif);
 }
 
--->
+
 </style>
 </head>
 <body>
 <div class="wrap1">
   <div class="wrap2">
     <div class="logo">
+      <% if User.is_there_current_user %>
+      <div class="slogan">Здравей, <%= User.get_current_user_name %> </div>
+      <h3> <a href="/favourites">Любими</a> </h3> <h3> <a href="/logout">Изход</a> </h3>
+      
+      <% else %>
       <form action="/login" method="post">
           <input type="text" name="username" placeholder="username">
           <input type="text" name="password" placeholder="password">
-          <input type="submit" value = "Login">
+          <input type="submit" value ="Влез">
       </form>
-      <h3> <a href="/register">Register</a> </h3>
+      <h3> <a href="/register">Регистрация</a></h3>
+      <% end %>
     </div>
     <div id="menu">
       <div class="menu">
@@ -58,22 +64,18 @@ div.wrap1 .wrap2 {
         </div>
       </div>
       <div class="mainpanel">
+        <% @newest_places.each do |place| %>
         <div class="text_">
-          <h1><a href="http://www.free-css.com/"><%= @name %> </a></h1>
+          <h1><a href="http://www.free-css.com/"><%= place.name %> </a></h1>
           <div class="text">
-            <img src=<%= @picture_path %> width="140" height="120" alt="" /> <%= @description %><br />
+            <img src=<%= place.main_picture_path %> width="140" height="120" alt="" /> <%= place.description %><br />
           </div>
 
           <div class="clearfix"></div>
 
-          <h2><a href="http://www.free-css.com/"><img src="img/more.gif" alt="" />Read more</a> <a href="http://www.free-css.com/"><img src="img/comment.gif" alt="" />Comments (8)</a></h2>
+          <h2><a href="http://www.free-css.com/"><img src="img/more.gif" alt="" />Read more</a> <a href="http://www.free-css.com/"><img src="img/comment.gif" alt="" />Comments (<%= Comment.get_comments_of_place(place['id']).size %>)</a></h2>
         </div>
-        <div class="text_">
-          <h1><a href="http://www.free-css.com/">Sed unum qualisque idi</a></h1>
-          <div class="text"><img src="img/img1.jpg" alt="" />Sed unum qualisque id, et est reque veniam disputando. Ad eum saperet consulatu laboramus, audire percipit eu cum. Nec eu wisi delicatissimi. Ut putent fabulas civibus eam, eu mucius nostrum philosophia pro, pri an reque iuvaret vulputate. Eum ei assum sensibus iudicabit. Ad has utinam senserit maiestatis. Sonet causae per no, ex vel choro eirmod alienum. Tota takimata <a href="http://www.free-css.com/">imperdiet</a> ea est, ut eligendi iudicabit mei. Sea probo <a href="http://www.free-css.com/">laboramus</a> in, paulo placerat at qui. Vix labore concludaturque ex. Cu alii movet diceret duo. </div>
-          <h2><a href="http://www.free-css.com/"><img src="img/more.gif" alt="" />Read more</a> <a href="http://www.free-css.com/"><img src="img/comment.gif" alt="" />Comments (1)</a></h2>
-        </div>
-        <div class="text_">
+        <% end %>
       </div>
 
     </div>

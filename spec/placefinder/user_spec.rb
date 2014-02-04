@@ -101,4 +101,41 @@ describe "User" do
     end
   end
 
+  describe 'is_username_available' do
+    it 'returns true if there are no users in the database' do
+      User.is_username_available('username').should eq true
+    end
+
+    it 'returns true if there is no user with this username' do
+      FactoryGirl.create(:user)
+      User.is_username_available('username1').should eq true
+    end
+
+    it 'returns false if the username has already been used' do
+      FactoryGirl.create(:user)
+      User.is_username_available('username').should eq false
+    end
+  end
+
+  describe 'register_user' do
+    it 'registers user successfully if the fields are properly filled' do
+      expect do
+        User.register_user("username", "password", "password", "Name")
+      end.to change(User, :count).by(1)
+    end
+
+    it 'raises exception if there is an empty field' do
+      ->{ User.register_user("", "password", "password", "Name") }.should raise_error EmptyField
+    end
+
+    it 'raises exception if the two passwords are not the same' do
+      ->{ User.register_user("a", "password-", "password", "Name") }.should raise_error PasswordFailure
+    end
+
+    it 'raises exception if there already exists a user with the same username' do
+      FactoryGirl.create(:user)
+      ->{ User.register_user("username", "password", "password", "Name") }.should raise_error UsernameDuplicate
+    end
+  end
+
 end

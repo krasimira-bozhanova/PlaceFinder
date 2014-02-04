@@ -6,25 +6,31 @@
 <link rel="stylesheet" type="text/css" media="screen, projection" href="/menu.css" />
 <link rel="stylesheet" type="text/css" media="screen, projection" href="/style.css" />
 <style type="text/css">
-<!--
+
 
 div.wrap1 .wrap2 {
   background-image: url(img/bg1.gif);
 }
 
--->
+
 </style>
 </head>
 <body>
 <div class="wrap1">
   <div class="wrap2">
     <div class="logo">
+      <% if User.is_there_current_user %>
+      <div class="slogan">Здравей, <%= User.get_current_user_name %> </div>
+      <h3> <a href="/favourites">Любими</a> </h3> <h3> <a href="/logout">Изход</a> </h3>
+      
+      <% else %>
       <form action="/login" method="post">
           <input type="text" name="username" placeholder="username">
           <input type="text" name="password" placeholder="password">
-          <input type="submit" value = "Login">
+          <input type="submit" value ="Влез">
       </form>
-      <h3> <a href="/register">Register</a> </h3>
+      <h3> <a href="/register">Регистрация</a></h3>
+      <% end %>
     </div>
     <div id="menu">
       <div class="menu">
@@ -58,32 +64,23 @@ div.wrap1 .wrap2 {
         </div>
       </div>
       <div class="mainpanel">
-        <h1>Търсене на заведение</h1>
-        <form action="/search" method="post">
-          <div class="dropdown">
-            Тип на заведението
-            <select name="type">
-              <option value="0">Избери тип</option>
-              <% @type_options.each do |type| %>
-                <option value="<%= type.id %>" ><%= type.name %></option>
-              <% end %>
-            </select>
+        <h1>Регистрация</h1>
+        <form action="/register" method="post">
+          <div class="register" align="center">
+            <input type="text" name="username" placeholder="username">
           </div>
-
-          <div class="dropdown">
-            Квартал
-            <select name="zhk">
-              <option value="0">Избери квартал</option>
-              <% @residential_complex_options.each do |complex| %>
-                <option value="<%= complex.id %>" ><%= complex.name %></option>
-              <% end %>
-            </select>
+          <div class="register" align="center">
+            <input type="text" name="password" placeholder="password">
           </div>
-
-          <div class="clearfix"></div>
-
-          <div style="margin-left: 250px" >
-            <input type="submit" value="Tърси" >
+          <div class="register" align="center">
+            <input type="text" name="repeat_password" placeholder="Repeat password">
+          </div>
+          <div class="register" align="center">
+            <input type="text" name="name" placeholder="name">
+          </div>
+          <div class="clearfix" align="center">
+            <input type="submit" value = "Регистрация">
+          </div>
           </div>
         </form>
 

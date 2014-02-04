@@ -6,25 +6,31 @@
 <link rel="stylesheet" type="text/css" media="screen, projection" href="/menu.css" />
 <link rel="stylesheet" type="text/css" media="screen, projection" href="/style.css" />
 <style type="text/css">
-<!--
+
 
 div.wrap1 .wrap2 {
   background-image: url(img/bg1.gif);
 }
 
--->
+
 </style>
 </head>
 <body>
 <div class="wrap1">
   <div class="wrap2">
     <div class="logo">
+      <% if User.is_there_current_user %>
+      <div class="slogan">Здравей, <%= User.get_current_user_name %> </div>
+      <h3> <a href="/favourites">Любими</a> </h3> <h3> <a href="/logout">Изход</a> </h3>
+      
+      <% else %>
       <form action="/login" method="post">
           <input type="text" name="username" placeholder="username">
           <input type="text" name="password" placeholder="password">
-          <input type="submit" value = "Login">
+          <input type="submit" value ="Влез">
       </form>
-      <h3> <a href="/register">Register</a> </h3>
+      <h3> <a href="/register">Регистрация</a></h3>
+      <% end %>
     </div>
     <div id="menu">
       <div class="menu">

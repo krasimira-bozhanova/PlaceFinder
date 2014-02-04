@@ -8,72 +8,54 @@ class MyApp < Sinatra::Base
   set :views, Proc.new { File.join(root, "views") }
 
   get '/' do
-    if User.login("krasi", "krasi")
-      puts "Login!!"
-    else
-      puts "no login"
-    end
-
-    address_id = Address.get_address_id(:residential_complex_id => 2,
-                                        :street => "Джеймс Баучер",
-                                        :street_number => 76)
-    place = Place.get_place(:name => "Табиет",
-                            :address_id => address_id,
-                            :type_id => 1)
-    puts place['date']
-    picture = Picture.get_pictures_for_place(place['id']).first
-    @name = place['name']
-    @description = place['description']
-    @picture_path = picture['picture_path']
-
-    puts "Current user:"
-    puts User.get_current_user
-
-    if User.is_there_current_user
-      puts "In if"
-      @username = User.get_current_user_name
-      erb :signed_in
-    else
-      erb :home
-    end
+    number = Place.all.size < 5 ? Place.all.size : 5
+    @newest_places = Place.get_newest_places(number)
+    erb :home
   end
 
-  get '/home' do
-    erb :home
+  get '/logout' do
+    User.logout
+    redirect '/'
   end
 
   get '/register' do
     erb :register
   end
 
+  post '/register' do
+    begin
+      User.register_user params[:username], params[:password], params[:repeat_password], params[:name]
+    rescue RegisterException => e
+      @message = e.message
+      erb :register_failure
+    else
+      erb :register_successful
+    end
+  end
+
   get '/top' do
+    number = Place.all.size < 5 ? Place.all.size : 5
+    @top_places = Place.get_places_with_highest_ratings(number)
     erb :top
   end
 
   get '/search' do
-    @type_options = Type.all
-    @residential_complex_options = ResidentialComplex.all
+    @type_options = Type.all.sort_by(&:name)
+    @residential_complex_options = ResidentialComplex.all.sort_by(&:name)
     erb :search
   end
 
   post "/search" do
     type, zhk = [params[:type], params[:zhk]].map(&:to_i)
-    puts type, zhk
     @result_places = Place.filter(type, zhk)
-    puts @result_places.inspect
     erb :filtered
   end
 
   post "/login" do
-    puts "In post"
     if User.login params[:username], params[:password]
-      puts "Login!!"
       @name = User.name_from_username params[:username]
-      puts @name
-      erb :signed_in
-    else
-      erb :home
     end
+    redirect '/'
   end
 
   get "/upload" do
@@ -81,7 +63,6 @@ class MyApp < Sinatra::Base
   end
 
   post "/upload" do
-    puts params[:file].inspect
     File.open("uploads/" + params[:file][:filename], "w") do |f|
       f.write(params[:file][:tempfile].read)
     end
