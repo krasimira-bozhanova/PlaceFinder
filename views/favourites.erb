@@ -1,0 +1,17 @@
+<div class="mainpanel">
+  <div class="category_name">
+    <h1>Любими места</h1>
+  </div>
+  <% @favourite_places.each do |place| %>
+  <div class="text_">
+    <h1><a href="/<%= place.id %>"><%= place.name %> </a></h1>
+    <div class="text">
+      <img src="/img/<%= place.main_picture_path %>" width="140" height="120" alt="" /> <%= place.description %><br />
+    </div>
+
+    <div class="clearfix"></div>
+
+    <h2><a href="/<%= place.id %>"><img src="img/more.gif" alt="" />Read more</a></h2>
+  </div>
+  <% end %>
+</div>
