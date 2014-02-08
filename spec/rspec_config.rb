@@ -1,8 +1,6 @@
 require 'database_cleaner'
 require 'rspec'
 
-puts "In rspec_config"
-
 RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction

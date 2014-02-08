@@ -70,7 +70,6 @@ div.wrap1 .wrap2 {
 div.wrap2 .logo {
     width:796; /* 796 */
     height:72px;
-    padding:0px;
     margin:0 auto;
     background-image: url("img/front.jpg");
     background-size:1000px 150px;
@@ -78,16 +77,14 @@ div.wrap2 .logo {
     color:#FFFFFF;
     font-size:22px;
     font-weight:bold;
-    padding:0 20px 60px 40px;
+    padding: 10px 20px 50px 40px;
 }
 
 div.logo .slogan {
     font-size:15px;
     font-weight:normal; /* normal */
-    margin-top:3px;
     margin-left:700px;
     text-align: right;
-
 }
 
 div.logo .register_form {
@@ -154,13 +151,11 @@ div.leftpanel .header {
 
 .comment {
     font-size:10px;
-    margin-top:40px;
-    margin-bottom:40px;
+    margin-top:20px;
+    margin-bottom:20px;
     border-bottom: 1px dashed #333333;
-    border-top:1px dotted #333333;
-    padding-top:25px;
-    padding-bottom:25px;
-
+    padding-top:10px;
+    padding-bottom:10px;
 }
 
 .category_name {
@@ -176,6 +171,10 @@ div.leftpanel .header {
 div.comment .text_comment {
     margin-top:10px;
     font-size:16px;
+}
+.vote {
+    margin-top:5px;
+    margin-bottom:10px;
 }
 
 .text { padding:8px; text-align:justify; }
@@ -224,3 +223,10 @@ div.leftpanel .inquiry {
 .clearfix:after {
   clear: both;
 }
+
+#tabs { font: 0.8em Arial, sans-serif; }
+#tabs { padding: 0; }
+#tabs li { display: inline; }
+#tabs li a { background: #333333; padding: 10px; float:left; border-right: 1px solid #ccf; border-bottom: none; text-decoration: none; color: #000; font-weight: bold;}
+#tabs li.active a { background: #eef; }
+.content { float: left; clear: both; padding: 10px 20px 20px; width: 570px; }

@@ -1,3 +1,3 @@
 require_relative 'placefinder'
 
-run PlaceFinder.new
+run PlaceFinder::PlaceFinder.new

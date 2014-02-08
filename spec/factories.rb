@@ -2,10 +2,8 @@ require 'digest/sha1'
 require 'date'
 require_relative '../models/placefinder'
 
-puts "In factories"
-
 FactoryGirl.define do
-  factory :user, class: User do
+  factory :user, class: PlaceFinder::User do
     username 'username'
     password Digest::SHA1.hexdigest('password')
     name 'Some User'
@@ -13,17 +11,17 @@ FactoryGirl.define do
     admin false
   end
 
-  factory :type_restaurant, class: Type do
+  factory :type_restaurant, class: PlaceFinder::Type do
     name 'Restaurant'
     plural_name 'Restaurants'
   end
 
-  factory :type_cafe, class: Type do
+  factory :type_cafe, class: PlaceFinder::Type do
     name 'Cafe'
     plural_name 'Cafes'
   end
 
-  factory :place, class: Place do
+  factory :place, class: PlaceFinder::Place do
     name 'Cool place'
     address_id 1
     type_id 1
@@ -33,7 +31,7 @@ FactoryGirl.define do
     date DateTime.now
   end
 
-  factory :place_type2, class: Place do
+  factory :place_type2, class: PlaceFinder::Place do
     name 'Cool place'
     address_id 1
     type_id 2
@@ -43,75 +41,75 @@ FactoryGirl.define do
     date DateTime.now
   end
 
-  factory :residential_complex, class: ResidentialComplex do
+  factory :residential_complex, class: PlaceFinder::ResidentialComplex do
     name 'Lozenets'
   end
 
-  factory :picture1, class: Picture do
+  factory :picture1, class: PlaceFinder::Picture do
     place_id 1
     picture_path "aaa.jpg"
   end
 
-  factory :picture1_2, class: Picture do
+  factory :picture1_2, class: PlaceFinder::Picture do
     place_id 1
     picture_path "bbb.jpg"
   end
 
-  factory :picture2, class: Picture do
+  factory :picture2, class: PlaceFinder::Picture do
     place_id 2
     picture_path "ccc.jpg"
   end
 
-  factory :favourite1, class: Favourite do
+  factory :favourite1, class: PlaceFinder::Favourite do
     user_id 1
     place_id 1
   end
 
-  factory :favourite1_2, class: Favourite do
+  factory :favourite1_2, class: PlaceFinder::Favourite do
     user_id 1
     place_id 2
   end
 
-  factory :favourite2, class: Favourite do
+  factory :favourite2, class: PlaceFinder::Favourite do
     user_id 2
     place_id 2
   end
 
-  factory :comment1, class: Comment do
+  factory :comment1, class: PlaceFinder::Comment do
     user_id 1
     place_id 1
     comment "Great place"
     date DateTime.now
   end
 
-  factory :comment2, class: Comment do
+  factory :comment2, class: PlaceFinder::Comment do
     user_id 2
     place_id 1
     comment "I agree"
     date DateTime.now
   end
 
-  factory :address, class: Address do
+  factory :address, class: PlaceFinder::Address do
     place_id -1
     residential_complex_id 1
     street 'Some street'
     street_number 1
   end
 
-  factory :address1, class: Address do
+  factory :address1, class: PlaceFinder::Address do
     place_id 1
     residential_complex_id 1
     street 'Some street'
     street_number 1
   end
 
-  factory :rating1_1, class: Rating do
+  factory :rating1_1, class: PlaceFinder::Rating do
     user_id 1
     place_id 1
     value 5
   end
 
-  factory :rating2_1, class: Rating do
+  factory :rating2_1, class: PlaceFinder::Rating do
     user_id 1
     place_id 1
     value 2

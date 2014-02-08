@@ -80,10 +80,7 @@ namespace :tests do
 
   require 'rspec/core'
   require 'rspec/core/rake_task'
-  desc 'Run unit specs'
-  puts "In task"
   RSpec::Core::RakeTask.new('unit') do |t|
-    # t.ruby_opts = '-w'
     t.pattern = FileList['spec/placefinder/*_spec.rb']
   end
 

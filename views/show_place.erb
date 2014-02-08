@@ -3,10 +3,13 @@
     <h1><a href="/<%= @place.id %>"><%= @place.name %> </a></h1>
     <div class="text__">
       <img src="/img/<%= @place.main_picture_path %>" width="160" height="140" alt="" /> 
-      <h3>Тип на заведението: <%= Type.type_name_by_id(@place.type_id) %></h3>
-      <% if User.is_there_current_user %> 
+      <h3>Тип на заведението: <%= @place_type %></h3>
+      <%= @place.description %><br/>
+      <div class="clearfix"></div>
+
+      <% if PlaceFinder::User.is_there_current_user %> 
         <div class="favourite">
-          <% if not Favourite.already_favourite?(User.current_user.id, @place.id) %>
+          <% if not @is_favourite %>
           <form action="/add_to_favourites" method="post">
               <input type="hidden" name="place_id" value="<%= @place.id %>">
               <input type="submit" value ="Добави към любими">
@@ -17,70 +20,72 @@
               <input type="submit" value ="Премахни от любими">
           </form>
           <% end %>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="vote">
+          <% unless @voted_already %>
           <form action="/vote" method="post">
+            <input type="hidden" name="place_id" value="<%= @place.id %>">
             <div class="dropdown">
-              <select name="type">
+              <select name="vote">
                 <option value="0">Дай оценка</option>
                 <% 1.upto(5).each do |rating| %>
                   <option value="<%= rating %>" ><%= rating %></option>
                 <% end %>
               </select>
+              <input type="submit" value="Гласувай" > 
+              <% end %> Оценка: <%= @rating %>
             </div>
-            <input type="submit" value="Гласувай" >
           </form>
         </div>
       <% end %>
+
       <div class="clearfix"></div>
-      <%= @place.description %><br/>
-    </div>
-    <div class="clearfix"></div>
-    <div id="map-canvas" style="height: 300px; width: 350px;"></div>
-    Адрес: <% address = Address.address_by_place_id @place.id %>
-    жк. <%= ResidentialComplex.residential_complex_name_by_id(address.residential_complex_id) %>
-    <span id="place_address"><%= ", " + address.street + " " + address.street_number.to_s %></span>
 
-    <div class="galleria">
-      <% Picture.pictures_for_place(@place.id).each do |picture| %>
-        <img src="/img/<%= picture.picture_path %>">
-      <% end %>
-    </div>
-    <script>
-        Galleria.loadTheme('galleria/themes/classic/galleria.classic.min.js');
-        Galleria.run('.galleria');
-    </script>
+      <ul id="tabs">
+          <li class="active"><a href="#contentMap">На картата</a></li>
+          <li><a href="#contentPictures">Снимки</a></li>
+          <li><a href="#contentComments">Коментари(<%= @comments.size %>)</a></li>
+      </ul>
 
-    <h2> <img src="img/comment.gif" alt="" />
-      Коментари (<%= Comment.comments_of_place(@place.id).size %>)</a></h2>
-    <% if User.is_there_current_user %>
-    <form action="/comment" method="post">
-      <input type="hidden" name="place_id" value="<%= @place.id %>">
-      <textarea name="comment_text" id="comment" rows="3" cols="40" placeholder="Напиши коментар"></textarea>
-      <div class="clearfix"> </div>
-      <input onclick="return check_if_empty();" type="submit" value="Изпрати">
-      <script>
-        function check_if_empty()
-        {
-          if(document.getElementById("comment").value == '')
-          {
-              alert("Полето за коментар е празно!");
-              return false;
-          }
-          return true;
-        }
-      </script>
-    </form>
-    <% end %>
-
-    <% Comment.comments_of_place(@place.id).reverse_each do |comment| %>
-    <div class="comment" >
-      <div class="date" >
-        <%= comment.date.strftime("Публикувано на %m/%d/%Y в %I:%M%p") %>
-        <%= "от " + User.username_from_id(comment.user_id) %>
+      <div class="content" id="contentMap">
+        <div class="clearfix"></div>
+        <div id="map-canvas" style="height: 300px; width: 560px;"></div>
+        Адрес: жк. <%= @residential_complex_name %>
+        <span id="place_address"><%= ", " + @address.street + " " + @address.street_number.to_s %></span>
       </div>
-      <div class="text_comment">
-        <%= comment.comment %>
+
+      <div class="content" id="contentPictures">
+        <div class="galleria">
+          <% @pictures_for_place.each do |picture| %>
+            <img src="/img/<%= picture.picture_path %>">
+          <% end %>
+        </div>
       </div>
-    </div>             
-    <% end %>
+
+      <div class="content" id="contentComments">
+        <% @comments.reverse_each do |comment| %>
+        <div class="comment" >
+          <div class="date" >
+            <%= comment.date.strftime("Публикувано на %m/%d/%Y в %I:%M%p") %>
+            <%= "от " + PlaceFinder::User.username_from_id(comment.user_id) %>
+          </div>
+          <div class="text_comment">
+            <%= comment.comment %>
+          </div>
+        </div>             
+        <% end %>
+
+        <% if PlaceFinder::User.is_there_current_user %>
+        <form action="/comment" method="post">
+          <input type="hidden" name="place_id" value="<%= @place.id %>">
+          <textarea name="comment_text" id="comment" rows="3" cols="40" placeholder="Напиши коментар"></textarea>
+          <div class="clearfix"> </div>
+          <input onclick="return check_if_empty();" type="submit" value="Изпрати">
+        </form>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

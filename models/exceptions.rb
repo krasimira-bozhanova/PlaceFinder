@@ -1,11 +1,13 @@
-class RegisterException < StandardError
-end
+module PlaceFinder
+  class RegisterException < StandardError
+  end
 
-class PasswordFailure < RegisterException
-end
+  class PasswordFailure < RegisterException
+  end
 
-class EmptyField < RegisterException
-end
+  class EmptyField < RegisterException
+  end
 
-class UsernameDuplicate < RegisterException
+  class UsernameDuplicate < RegisterException
+  end
 end
