@@ -1,3 +1,6 @@
 db/development.db
 db/test.db
 database.log
+public/img/*
+fill_database.rb
+todo.txt
