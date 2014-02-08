@@ -69,22 +69,35 @@ div.wrap1 .wrap2 {
 
 div.wrap2 .logo {
     width:796; /* 796 */
-    height:61px;
+    height:72px;
     padding:0px;
     margin:0 auto;
-    background-image: url("img/logo.png");
-    background-size:1000px 120px;
+    background-image: url("img/front.jpg");
+    background-size:1000px 150px;
     background-repeat:no-repeat;
     color:#FFFFFF;
     font-size:22px;
     font-weight:bold;
-    padding:30px;
+    padding:0 20px 60px 40px;
 }
 
 div.logo .slogan {
-    font-size:14px;
+    font-size:15px;
     font-weight:normal; /* normal */
     margin-top:3px;
+    margin-left:700px;
+    text-align: right;
+
+}
+
+div.logo .register_form {
+    margin-left:310px;
+    margin-top:0px;
+}
+
+div.logo .register {
+    margin-left:710px;
+    margin-top:0px;
 }
 
 div.info, div.info1 {
@@ -148,6 +161,11 @@ div.leftpanel .header {
     padding-top:25px;
     padding-bottom:25px;
 
+}
+
+.category_name {
+    margin-top:10px;
+    margin-bottom:10px;
 }
 
 div.comment .text_comment {
