@@ -14,16 +14,15 @@ class User < ActiveRecord::Base
       end
     end
 
-    def get_current_user
-      where(:login => true).map { |user| user.attributes }.first
+    def current_user
+      where(:login => true).first
     end
 
-    def get_id_from_username(username)
-      user = where(:username => username).first
-      user.nil? ? 0 : user.id
+    def id_from_username(username)
+      where(:username => username).map(&:id).first
     end
 
-    def get_username_from_id(user_id)
+    def username_from_id(user_id)
       where(:id => user_id).first.username
     end
 
@@ -41,30 +40,22 @@ class User < ActiveRecord::Base
     end
 
     def logout
-      update(get_current_user['id'], :login => false)
+      update(current_user.id, :login => false)
     end
 
-    def get_favourite_places_for_user
+    def favourite_places_for_user
     end
 
     def validate_input_login(username, password)
       [username, password].none?(&:empty?)
     end
 
-    def id_from_username(username)
-      where(:username => username).map { |user| user.attributes['id'] }.first
-    end
-
     def name_from_username(username)
-      where(:username => username).map { |user| user.attributes['name'] }.first
+      where(:username => username).map(&:name).first
     end
 
     def is_there_current_user
       not where(:login => true).empty?
-    end
-
-    def get_current_user_name
-      get_current_user["name"]
     end
 
     def is_username_available(username)

@@ -6,9 +6,10 @@ class Picture < ActiveRecord::Base
              :picture_path => picture_path)
     end
 
-    def get_pictures_for_place(place_id)
-      where(:place_id => place_id)
+    def pictures_for_place(place_id)
+      unless where(:place_id => place_id).empty?
+        where(:place_id => place_id)
+      end
     end
-
   end
 end

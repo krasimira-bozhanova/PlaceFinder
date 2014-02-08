@@ -12,17 +12,22 @@ class Address < ActiveRecord::Base
     end
 
     def add_place_id_to_address(place_id, address_id)
-      update(address_id, :place_id => place_id)
+      if where(:id => address_id).first.place_id == -1
+        update(address_id, :place_id => place_id)
+      end
     end
 
-    def get_address_by_place_id(place_id)
+    def address_by_place_id(place_id)
       where(:place_id => place_id).first
     end
 
-    def get_address_id(residential_complex_id:, street:, street_number:)
-      where(:residential_complex_id => residential_complex_id,
-            :street => street,
-            :street_number => street_number).first.id
+    def address_id(residential_complex_id:, street:, street_number:)
+      filtered_result = where(:residential_complex_id => residential_complex_id,
+                            :street => street,
+                            :street_number => street_number)
+      unless filtered_result.empty?
+        filtered_result.first.id
+      end
     end
 
   end

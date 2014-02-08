@@ -13,7 +13,7 @@ class Comment < ActiveRecord::Base
       end
     end
 
-    def get_comments_of_place(place_id)
+    def comments_of_place(place_id)
       where(:place_id => place_id).sort_by(&:date)
     end
 

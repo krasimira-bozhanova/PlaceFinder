@@ -1,7 +1,7 @@
 class Favourite < ActiveRecord::Base
   class << self
 
-    def add_favourite(user_id, place_id)
+    def add_favourite(user_id:, place_id:)
       unless user_id < 1 or place_id < 1
         unless already_favourite?(user_id, place_id)
           create(:user_id => user_id,
@@ -10,8 +10,8 @@ class Favourite < ActiveRecord::Base
       end
     end
 
-    def get_favourite_places_for_user(user_id)
-      where(:user_id => user_id).map { |favourite| favourite.attributes['place_id'] }
+    def favourite_places_for_user(user_id)
+      where(:user_id => user_id).map(&:place_id)
     end
 
     def remove_favourite(user_id, place_id)

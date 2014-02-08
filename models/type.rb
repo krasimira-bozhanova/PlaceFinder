@@ -9,8 +9,16 @@ class Type < ActiveRecord::Base
       end
     end
 
-    def get_type_name_by_id(type_id)
-      where(:id => type_id).first.name
+    def type_name_by_id(type_id)
+      unless where(:id => type_id).empty?
+        where(:id => type_id).first.name
+      end
+    end
+
+    def type_plural_name_by_id(type_id)
+      unless where(:id => type_id).empty?
+        where(:id => type_id).first.plural_name
+      end
     end
   end
 end

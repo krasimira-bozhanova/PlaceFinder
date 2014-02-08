@@ -7,8 +7,10 @@ class ResidentialComplex < ActiveRecord::Base
       end
     end
 
-    def get_residential_complex_name(id)
-      where(:id => id).first.name
+    def residential_complex_name_by_id(id)
+      unless where(:id => id).empty?
+        where(:id => id).first.name
+      end
     end
   end
 end

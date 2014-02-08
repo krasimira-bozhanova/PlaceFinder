@@ -12,9 +12,9 @@ class Rating < ActiveRecord::Base
       end
     end
 
-    def get_rating_of_place(place_id)
+    def rating_of_place(place_id)
       unless where(:place_id => place_id).empty?
-        all_ratings = where(:place_id => place_id).map { |rating| rating.value }
+        all_ratings = where(:place_id => place_id).map(&:value)
         all_ratings.reduce(&:+) / all_ratings.size
       end
     end
@@ -23,12 +23,12 @@ class Rating < ActiveRecord::Base
       not where(:user_id => user_id, :place_id => place_id).empty?
     end
 
-    def get_place_ids_with_highest_rating(number)
+    def place_ids_with_highest_rating(number)
       places_hash = {}
-      select(:place_id).map { |rating| rating[:place_id] } .each do |place_id|
-        places_hash[place_id] = get_rating_of_place place_id
+      select(:place_id).map { |rating| rating[:place_id] }.each do |place_id|
+        places_hash[place_id] = rating_of_place place_id
       end
-      places_hash.sort_by { |key, value| -value }.take(number)
+      places_hash.sort_by { |key, value| -value }.map(&:first).take(number)
     end
 
   end
