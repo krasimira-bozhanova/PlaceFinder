@@ -1,187 +1,86 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>Corporation ltd.</title>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1250" />
-<link rel="stylesheet" type="text/css" media="screen, projection" href="/menu.css" />
-<link rel="stylesheet" type="text/css" media="screen, projection" href="/style.css" />
-<style type="text/css">
+<div class="mainpanel">
+  <div class="text_">
+    <h1><a href="/<%= @place.id %>"><%= @place.name %> </a></h1>
+    <div class="text__">
+      <img src="/img/<%= @place.main_picture_path %>" width="160" height="140" alt="" /> 
+      <h3>Тип на заведението: <%= Type.type_name_by_id(@place.type_id) %></h3>
+      <% if User.is_there_current_user %> 
+        <div class="favourite">
+          <% if not Favourite.already_favourite?(User.current_user.id, @place.id) %>
+          <form action="/add_to_favourites" method="post">
+              <input type="hidden" name="place_id" value="<%= @place.id %>">
+              <input type="submit" value ="Добави към любими">
+          </form>
+          <% else %>
+          <form action="/remove_from_favourites" method="post">
+              <input type="hidden" name="place_id" value="<%= @place.id %>">
+              <input type="submit" value ="Премахни от любими">
+          </form>
+          <% end %>
+          <form action="/vote" method="post">
+            <div class="dropdown">
+              <select name="type">
+                <option value="0">Дай оценка</option>
+                <% 1.upto(5).each do |rating| %>
+                  <option value="<%= rating %>" ><%= rating %></option>
+                <% end %>
+              </select>
+            </div>
+            <input type="submit" value="Гласувай" >
+          </form>
+        </div>
+      <% end %>
+      <div class="clearfix"></div>
+      <%= @place.description %><br/>
+    </div>
+    <div class="clearfix"></div>
+    <div id="map-canvas" style="height: 300px; width: 350px;"></div>
+    Адрес: <% address = Address.address_by_place_id @place.id %>
+    жк. <%= ResidentialComplex.residential_complex_name_by_id(address.residential_complex_id) %>
+    <span id="place_address"><%= ", " + address.street + " " + address.street_number.to_s %></span>
 
-
-div.wrap1 .wrap2 {
-  background-image: url(img/bg1.gif);
-}
-
-
-</style>
-<style>
-.galleria {
-    height:300px;
-}
-</style>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-<script src="galleria/galleria-1.3.5.min.js"></script>
-
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 100% }
-    </style>
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIAjJC_JlciZGMNpauYstcnDQN58H7Tp8&sensor=false">
-    </script>
-    <script type="text/javascript">
-      function initialize() {
-          var locationLatLng;
-          var geocoder = new google.maps.Geocoder();
-          geocoder.geocode({
-              "address": "България, София" + document.getElementById("place_address").innerHTML
-          }, function(results) {
-              locationLatLng = results[0].geometry.location; //LatLng
-              var mapOptions = {
-                zoom: 17,
-                center: locationLatLng
-              }
-              var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-              var marker = new google.maps.Marker({
-                  position: locationLatLng,
-                  map: map,
-                  title: 'Hello World!'
-              });
-          });
-
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
-      google.maps.event.trigger(map, 'resize')
-    </script>
-
-
-</head>
-<body>
-<div class="wrap1">
-  <div class="wrap2">
-    <div class="logo">
-      <% if User.is_there_current_user %>
-      <div class="slogan">
-        <h3>Здравей, <%= User.current_user.name %> </h3>
-        <h3> <a href="/favourites">Любими</a> </h3>
-        <h3> <a href="/logout">Изход</a> </h3>
-      </div>
-      
-      <% else %>
-      <div class="register_form">
-        <form action="/login" method="post">
-            <input type="text" name="username" placeholder="username">
-            <input type="password" name="password" placeholder="password">
-            <input type="submit" value ="Влез">
-        </form>
-      </div>
-      <div class="register">
-          <h3><a href="/register">Регистрация</a></h3>
-      </div>
+    <div class="galleria">
+      <% Picture.pictures_for_place(@place.id).each do |picture| %>
+        <img src="/img/<%= picture.picture_path %>">
       <% end %>
     </div>
-    <div id="menu">
-      <div class="menu">
-        <ul>
-          <li><span class="hlavny_"><a href="/">Начало</a></span></li>
-          <li><img src="img/divider2.png" alt="" /></li>
-          <li><span class="hlavny_"><a href="/top">Топ 10</a></span></li>
-          <li><img src="img/divider2.png" alt="" /></li>
-          <li><span class="hlavny_"><a href="/search">Търсене</a></span></li>
-        </ul>
+    <script>
+        Galleria.loadTheme('galleria/themes/classic/galleria.classic.min.js');
+        Galleria.run('.galleria');
+    </script>
+
+    <h2> <img src="img/comment.gif" alt="" />
+      Коментари (<%= Comment.comments_of_place(@place.id).size %>)</a></h2>
+    <% if User.is_there_current_user %>
+    <form action="/comment" method="post">
+      <input type="hidden" name="place_id" value="<%= @place.id %>">
+      <textarea name="comment_text" id="comment" rows="3" cols="40" placeholder="Напиши коментар"></textarea>
+      <div class="clearfix"> </div>
+      <input onclick="return check_if_empty();" type="submit" value="Изпрати">
+      <script>
+        function check_if_empty()
+        {
+          if(document.getElementById("comment").value == '')
+          {
+              alert("Полето за коментар е празно!");
+              return false;
+          }
+          return true;
+        }
+      </script>
+    </form>
+    <% end %>
+
+    <% Comment.comments_of_place(@place.id).reverse_each do |comment| %>
+    <div class="comment" >
+      <div class="date" >
+        <%= comment.date.strftime("Публикувано на %m/%d/%Y в %I:%M%p") %>
+        <%= "от " + User.username_from_id(comment.user_id) %>
       </div>
-
-      <div class="info"> This text is describing selected item. You may give here advertisement, informations etc. Whatever! </div>
-      <div class="leftpanel">
-        <div class="header">Тип на заведението</div>
-        <ul id="categories">
-          <% Type.all.each do |type| %>
-          <li><a href="/categories/<%= type.id %>"><%= type.plural_name %></a></li>
-          <% end %>
-        </ul>
-        <br />
-        <div class="header">Office</div>
-        <div class="text"> <strong>Corporation ltd.</strong><br />
-          <br />
-          212 Military Parkway<br />
-          <span class="divider">Los Angeles, CA 94043</span> Telephone: +421 903 000 000<br />
-          E-mail: e-mail@domain.com<br />
-          ICQ: 000-000-000<br />
-          Skype: corporation1<br />
-          <br />
-        </div>
+      <div class="text_comment">
+        <%= comment.comment %>
       </div>
-      <div class="mainpanel">
-         <div class="text_">
-            <h1><a href="/<%= @place.id %>"><%= @place.name %> </a></h1>
-            <div class="text__">
-                <img src="/img/<%= @place.main_picture_path %>" width="160" height="140" alt="" /> 
-                <h3>Тип на заведението: <%= Type.type_name_by_id(@place.type_id) %></h3></br>
-                <form 
-                <h3><a href="/add_to_favourites">Добави към любими</a></h3></br>
-                <%= @place.description %><br/>
-            </div>
-            <div class="clearfix"></div>
-            <div id="map-canvas" style="height: 300px; width: 350px;"></div>
-            Адрес: <% address = Address.address_by_place_id @place.id %>
-            жк. <%= ResidentialComplex.residential_complex_name_by_id(address.residential_complex_id) %>
-            <span id="place_address"><%= ", " + address.street + " " + address.street_number.to_s %></span>
-
-              <div class="galleria">
-                <% Picture.pictures_for_place(@place.id).each do |picture| %>
-                  <img src="/img/<%= picture.picture_path %>">
-                <% end %>
-              </div>
-              <script>
-                  Galleria.loadTheme('galleria/themes/classic/galleria.classic.min.js');
-                  Galleria.run('.galleria');
-              </script>
-
-              <h2> <img src="img/comment.gif" alt="" />Коментари (<%= Comment.comments_of_place(@place.id).size %>)</a></h2>
-              <% if User.is_there_current_user %>
-              <form action="/comment" method="post">
-                <input type="hidden" name="place_id" value="<%= @place.id %>">
-                <textarea name="comment_text" id="comment" rows="3" cols="40" placeholder="Напиши коментар"></textarea>
-                <div class="clearfix"> </div>
-                <input onclick="return check_if_empty();" type="submit" value="Изпрати">
-                <script>
-                  function check_if_empty()
-                  {
-                    if(document.getElementById("comment").value == '')
-                    {
-                        alert("Полето за коментар е празно!");
-                        return false;
-                    }
-                    return true;
-                  }
-                </script>
-              </form>
-              <% end %>
-
-              <% Comment.comments_of_place(@place.id).reverse_each do |comment| %>
-                <div class="comment" >
-                  <div class="date" >
-                    <%= comment.date.strftime("Публикувано на %m/%d/%Y в %I:%M%p") %>
-                    <%= "от " + User.username_from_id(comment.user_id) %>
-                  </div>
-                  <div class="text_comment">
-                      <%= comment.comment %>
-                  </div>
-                </div>             
-              <% end %>
-        </div>
-        
-      </div>
-
-    </div>
-    <div class="info1">
-      <div style="display:inline; float:left;">&copy; 2008 <a href="http://www.free-css.com/">yourwebsite.com</a>. Design <a href="http://pbcreations.sk">P&amp;B Creations</a>.</div>
-      <div style="display:inline; float:right;"><a href="http://www.topas-tachlovice.cz/topas-tachlovice.aspx">Tachlovice</a></div>
-    </div>
+    </div>             
+    <% end %>
   </div>
 </div>
-</body>
-</html>

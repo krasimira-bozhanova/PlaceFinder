@@ -168,6 +168,11 @@ div.leftpanel .header {
     margin-bottom:10px;
 }
 
+.favourite {
+    height:40px;
+    margin-bottom:10px;
+}
+
 div.comment .text_comment {
     margin-top:10px;
     font-size:16px;
