@@ -1,3 +1,3 @@
-require './controllers/my_app'
+require_relative 'placefinder'
 
-run MyApp.new
+run PlaceFinder.new
