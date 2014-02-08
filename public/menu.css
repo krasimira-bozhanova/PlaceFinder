@@ -47,7 +47,6 @@ div#menu .menu {
 
 	div#menu li span.hlavny {
 		background-image:url(img/menu-central.gif);
-		background-size:900px 120px;
 		background-repeat:repeat-x;
 		height: 58px;
 		overflow: visible;

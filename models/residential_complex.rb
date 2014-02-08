@@ -6,5 +6,9 @@ class ResidentialComplex < ActiveRecord::Base
         create(:name => name)
       end
     end
+
+    def get_residential_complex_name(id)
+      where(:id => id).first.name
+    end
   end
 end

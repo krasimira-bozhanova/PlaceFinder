@@ -21,9 +21,10 @@ ActiveRecord::Schema.define(version: 20140203161700) do
   end
 
   create_table "comments", force: true do |t|
-    t.integer "place_id", null: false
-    t.integer "user_id",  null: false
-    t.text    "comment",  null: false
+    t.integer  "place_id", null: false
+    t.integer  "user_id",  null: false
+    t.text     "comment",  null: false
+    t.datetime "date",     null: false
   end
 
   create_table "favourites", force: true do |t|
@@ -58,7 +59,8 @@ ActiveRecord::Schema.define(version: 20140203161700) do
   end
 
   create_table "types", force: true do |t|
-    t.string "name", null: false
+    t.string "name",        null: false
+    t.string "plural_name", null: false
   end
 
   create_table "users", force: true do |t|

@@ -7,9 +7,7 @@ class Picture < ActiveRecord::Base
     end
 
     def get_pictures_for_place(place_id)
-      where(:place_id => place_id).each_with_object([]) do |picture, array|
-        array << picture.attributes
-      end
+      where(:place_id => place_id)
     end
 
   end

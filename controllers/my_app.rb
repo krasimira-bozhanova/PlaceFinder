@@ -6,6 +6,14 @@ class MyApp < Sinatra::Base
   set :root, File.join(File.dirname(__FILE__), '..')
   # sets the view directory correctly
   set :views, Proc.new { File.join(root, "views") }
+  set :static, true
+
+  after do
+    ActiveRecord::Base.connection.close
+  end
+
+  @place_types = Type.all
+  puts @place_types.inspect
 
   get '/' do
     number = Place.all.size < 5 ? Place.all.size : 5
@@ -16,6 +24,10 @@ class MyApp < Sinatra::Base
   get '/logout' do
     User.logout
     redirect '/'
+  end
+
+  get '/gallery' do
+    erb :gallery
   end
 
   get '/register' do
@@ -31,6 +43,24 @@ class MyApp < Sinatra::Base
     else
       erb :register_successful
     end
+  end
+
+  post '/comment' do
+    @place = Place.get_place_by_id params[:place_id]
+    @comment = params[:comment_text]
+    if not @comment.empty?
+      Comment.add_comment :user_id => User.get_current_user['id'],
+                          :place_id => @place['id'],
+                          :comment => @comment
+    end
+    erb :show_place
+  end
+
+  get %r{/(\d+)} do
+    #puts "#{params[:captures].first}"
+    puts params[:captures].first
+    @place = Place.get_place_by_id(params[:captures].first)
+    erb :show_place
   end
 
   get '/top' do

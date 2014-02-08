@@ -34,12 +34,11 @@ div.wrap1 .wrap2 {
     </div>
     <div id="menu">
       <div class="menu">
-        <ul>
-          <li><span class="left"></span><span class="hlavny"><a href="/">Начало</a></span><span class="right"></span></li>
-          <li><img src="img/divider2.png" alt="" /></li>
-          <li><span class="hlavny_"><a href="top">Топ 10</a></span></li>
-          <li><img src="img/divider2.png" alt="" /></li>
-          <li><span class="hlavny_"><a href="search">Търсене</a></span></li>
+        <ul id="categories">
+          <li style="border-top:0;"><a href="/type_<%= Type.all.first.id %>"><%= Type.all.first.plural_name %></a></li>
+          <% Type.all.each do |type| %>
+          <li><a href="/type_<%= type.id %>"><%= type.plural_name %></a></li>
+          <% end %>
         </ul>
       </div>
       <div class="info"> This text is describing selected item. You may give here advertisement, informations etc. Whatever! </div>

@@ -23,6 +23,11 @@ class User < ActiveRecord::Base
       user.nil? ? 0 : user.id
     end
 
+    def get_username_from_id(user_id)
+      where(:id => user_id).first.username
+    end
+
+
     def login(username, password)
       if validate_input_login username, password
         encrypted_password = Digest::SHA1.hexdigest(password)

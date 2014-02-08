@@ -16,7 +16,7 @@ class Address < ActiveRecord::Base
     end
 
     def get_address_by_place_id(place_id)
-      where(:place_id => place_id)
+      where(:place_id => place_id).first
     end
 
     def get_address_id(residential_complex_id:, street:, street_number:)

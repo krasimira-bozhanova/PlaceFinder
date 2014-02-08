@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Corporation ltd.</title>
@@ -25,8 +25,8 @@ div.wrap1 .wrap2 {
       
       <% else %>
       <form action="/login" method="post">
-          <input type="text" name="username" placeholder="username">
-          <input type="text" name="password" placeholder="password">
+          <input type="text" name="username" placeholder="username"/>
+          <input type="text" name="password" placeholder="password"/>
           <input type="submit" value ="Влез">
       </form>
       <h3> <a href="/register">Регистрация</a></h3>
@@ -46,10 +46,10 @@ div.wrap1 .wrap2 {
       <div class="leftpanel">
         <div class="header">Products</div>
         <ul id="categories">
-          <li style="border-top:0;"><a href="http://www.free-css.com/">Ресторанти</a></li>
-          <li><a href="http://www.free-css.com/">Кафенета</a></li>
-          <li><a href="http://www.free-css.com/">Барове</a></li>
-          <!--li class="selected"><a href="http://www.free-css.com/">Item 4 - selected</a></li -->
+          <li style="border-top:0;"><a href="/type_<%= Type.all.first.id %>"><%= Type.all.first.plural_name %></a></li>
+          <% Type.all.each do |type| %>
+          <li><a href="/type_<%= type.id %>"><%= type.plural_name %></a></li>
+          <% end %>
         </ul>
         <br />
         <div class="header">Office</div>
@@ -81,7 +81,6 @@ div.wrap1 .wrap2 {
           <div class="clearfix" align="center">
             <input type="submit" value = "Регистрация">
           </div>
-          </div>
         </form>
 
       </div>
@@ -91,6 +90,5 @@ div.wrap1 .wrap2 {
       <div style="display:inline; float:right;"><a href="http://www.topas-tachlovice.cz/topas-tachlovice.aspx">Tachlovice</a></div>
     </div>
   </div>
-</div>
 </body>
 </html>

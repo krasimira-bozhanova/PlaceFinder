@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Corporation ltd.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250" />
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/menu.css" />
+<link rel="stylesheet" type="text/css" media="screen, projection" href="/style.css" />
+<style type="text/css">
+
+
+div.wrap1 .wrap2 {
+  background-image: url(img/bg1.gif);
+}
+
+
+</style>
+<style>
+.galleria {
+    height:300px;
+}
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+<script src="galleria/galleria-1.3.5.min.js"></script>
+
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map-canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIAjJC_JlciZGMNpauYstcnDQN58H7Tp8&sensor=false">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+          var locationLatLng;
+          var geocoder = new google.maps.Geocoder();
+          geocoder.geocode({
+              "address": "България, София" + document.getElementById("place_address").innerHTML
+          }, function(results) {
+              locationLatLng = results[0].geometry.location; //LatLng
+              var mapOptions = {
+                zoom: 17,
+                center: locationLatLng
+              }
+              var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+              var marker = new google.maps.Marker({
+                  position: locationLatLng,
+                  map: map,
+                  title: 'Hello World!'
+              });
+          });
+
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+      google.maps.event.trigger(map, 'resize')
+    </script>
+
+
+</head>
+<body>
+<div class="wrap1">
+  <div class="wrap2">
+    <div class="logo">
+      <% if User.is_there_current_user %>
+      <div class="slogan">Здравей, <%= User.get_current_user_name %> </div>
+      <h3> <a href="/favourites">Любими</a> </h3> <h3> <a href="/logout">Изход</a> </h3>
+      
+      <% else %>
+      <form action="/login" method="post">
+          <input type="text" name="username" placeholder="username">
+          <input type="text" name="password" placeholder="password">
+          <input type="submit" value ="Влез">
+      </form>
+      <h3> <a href="/register">Регистрация</a></h3>
+      <% end %>
+    </div>
+    <div id="menu">
+      <div class="menu">
+        <ul>
+          <li><span class="left"></span><span class="hlavny"><a href="/">Начало</a></span><span class="right"></span></li>
+          <li><img src="img/divider2.png" alt="" /></li>
+          <li><span class="hlavny_"><a href="top">Топ 10</a></span></li>
+          <li><img src="img/divider2.png" alt="" /></li>
+          <li><span class="hlavny_"><a href="search">Търсене</a></span></li>
+        </ul>
+      </div>
+
+      <div class="info"> This text is describing selected item. You may give here advertisement, informations etc. Whatever! </div>
+      <div class="leftpanel">
+        <div class="header">Products</div>
+        <ul id="categories">
+          <li style="border-top:0;"><a href="/type_<%= Type.all.first.id %>"><%= Type.all.first.plural_name %></a></li>
+          <% Type.all.each do |type| %>
+          <li><a href="/type_<%= type.id %>"><%= type.plural_name %></a></li>
+          <% end %>
+        </ul>
+        <br />
+        <div class="header">Office</div>
+        <div class="text"> <strong>Corporation ltd.</strong><br />
+          <br />
+          212 Military Parkway<br />
+          <span class="divider">Los Angeles, CA 94043</span> Telephone: +421 903 000 000<br />
+          E-mail: e-mail@domain.com<br />
+          ICQ: 000-000-000<br />
+          Skype: corporation1<br />
+          <br />
+        </div>
+      </div>
+      <div class="mainpanel">
+         <div class="text_">
+            <h1><a href="/<%= @place['id'] %>"><%= @place['name'] %> </a></h1>
+            <div class="text__">
+                <img src=<%= @place['main_picture_path'] %> width="160" height="140" alt="" /> <%= @place['description'] %><br />
+            </div>
+            <div class="clearfix"> </div>
+            <h3>Тип на заведението: <%= Type.get_type_name_by_id(@place['type_id']) %></h3>
+            <div id="map-canvas" style="height: 300px; width: 350px;"></div>
+            Адрес: <% address = Address.get_address_by_place_id @place['id'] %>
+            жк. <%= ResidentialComplex.get_residential_complex_name(address.residential_complex_id) %>
+            <span id="place_address"><%= ", " + address.street + " " + address.street_number.to_s %></span>
+
+              <div class="galleria">
+                <% Picture.get_pictures_for_place(@place['id']).each do |picture| %>
+                  <img src="<%= picture.picture_path %>">
+                <% end %>
+              </div>
+              <script>
+                  Galleria.loadTheme('galleria/themes/classic/galleria.classic.min.js');
+                  Galleria.run('.galleria');
+              </script>
+
+              <h2> <img src="img/comment.gif" alt="" />Коментари (<%= Comment.get_comments_of_place(@place['id']).size %>)</a></h2>
+              <% if User.is_there_current_user %>
+              <form action="/comment" method="post">
+                <input type="hidden" name="place_id" value="<%= @place['id'] %>">
+                <textarea name="comment_text" id="comment" rows="3" cols="40" placeholder="Напиши коментар"></textarea>
+                <div class="clearfix"> </div>
+                <input onclick="return check_if_empty();" type="submit" value="Изпрати">
+                <script>
+                  function check_if_empty()
+                  {
+                    if(document.getElementById("comment").value == '')
+                    {
+                        alert("Полето за коментар е празно!");
+                        return false;
+                    }
+                    return true;
+                  }
+                </script>
+              </form>
+              <% end %>
+
+              <% Comment.get_comments_of_place(@place['id']).reverse_each do |comment| %>
+                <div class="comment" >
+                  <div class="date" >
+                    <%= comment.date.strftime("Публикувано на %m/%d/%Y в %I:%M%p") %>
+                    <%= "от " + User.get_username_from_id(comment.user_id) %>
+                  </div>
+                  <div class="text_comment">
+                      <%= comment.comment %>
+                  </div>
+                </div>             
+              <% end %>
+        </div>
+        
+      </div>
+
+    </div>
+    <div class="info1">
+      <div style="display:inline; float:left;">&copy; 2008 <a href="http://www.free-css.com/">yourwebsite.com</a>. Design <a href="http://pbcreations.sk">P&amp;B Creations</a>.</div>
+      <div style="display:inline; float:right;"><a href="http://www.topas-tachlovice.cz/topas-tachlovice.aspx">Tachlovice</a></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
