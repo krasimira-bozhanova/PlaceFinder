@@ -66,25 +66,11 @@ describe "User" do
     end
   end
 
-  describe 'get_current_user' do
+  describe 'current_user' do
     it 'returns the correct user' do
-      FactoryGirl.create(:user)
+      user = FactoryGirl.create(:user)
       User.login('username', 'password')
-      User.get_current_user.should == {
-        "id"=>1,
-        "username"=>"username",
-        "password"=>Digest::SHA1.hexdigest("password"),
-        "name"=>"Some User",
-        "admin"=>false,
-        "login"=>true}
-    end
-  end
-
-  describe 'get_current_user_name' do
-    it 'returns the correct name' do
-      FactoryGirl.create(:user)
-      User.login('username', 'password')
-      User.get_current_user_name.should eq "Some User"
+      User.current_user.should eq user
     end
   end
 

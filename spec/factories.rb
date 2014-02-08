@@ -14,11 +14,13 @@ FactoryGirl.define do
   end
 
   factory :type_restaurant, class: Type do
-    name 'restaurant'
+    name 'Restaurant'
+    plural_name 'Restaurants'
   end
 
   factory :type_cafe, class: Type do
-    name 'cafe'
+    name 'Cafe'
+    plural_name 'Cafes'
   end
 
   factory :place, class: Place do
@@ -41,10 +43,77 @@ FactoryGirl.define do
     date DateTime.now
   end
 
-  # factory :address, class: Address do
-  #   place_id 1
-  #   zhk 'Izgrev'
-  #   street 'Some street'
-  #   street_number 1
-  # end
+  factory :residential_complex, class: ResidentialComplex do
+    name 'Lozenets'
+  end
+
+  factory :picture1, class: Picture do
+    place_id 1
+    picture_path "aaa.jpg"
+  end
+
+  factory :picture1_2, class: Picture do
+    place_id 1
+    picture_path "bbb.jpg"
+  end
+
+  factory :picture2, class: Picture do
+    place_id 2
+    picture_path "ccc.jpg"
+  end
+
+  factory :favourite1, class: Favourite do
+    user_id 1
+    place_id 1
+  end
+
+  factory :favourite1_2, class: Favourite do
+    user_id 1
+    place_id 2
+  end
+
+  factory :favourite2, class: Favourite do
+    user_id 2
+    place_id 2
+  end
+
+  factory :comment1, class: Comment do
+    user_id 1
+    place_id 1
+    comment "Great place"
+    date DateTime.now
+  end
+
+  factory :comment2, class: Comment do
+    user_id 2
+    place_id 1
+    comment "I agree"
+    date DateTime.now
+  end
+
+  factory :address, class: Address do
+    place_id -1
+    residential_complex_id 1
+    street 'Some street'
+    street_number 1
+  end
+
+  factory :address1, class: Address do
+    place_id 1
+    residential_complex_id 1
+    street 'Some street'
+    street_number 1
+  end
+
+  factory :rating1_1, class: Rating do
+    user_id 1
+    place_id 1
+    value 5
+  end
+
+  factory :rating2_1, class: Rating do
+    user_id 1
+    place_id 1
+    value 2
+  end
 end
