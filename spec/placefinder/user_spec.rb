@@ -1,24 +1,26 @@
-require_relative '../../spec/rspec_config'
-require_relative '../../models/user'
-require 'digest/sha1'
+require_relative '../spec_helper'
 
 module PlaceFinder
   describe "User" do
-    describe "validate_input_login" do
+    describe "empty_or_whitespace?" do
       it "works with an empty username" do
-        User.validate_input_login("", "pass").should eq false
+        User.send(:empty_or_whitespace?, "", "pass").should eq true
       end
 
       it "works with an empty pass" do
-        User.validate_input_login("a", "").should eq false
+        User.send(:empty_or_whitespace?, "a", "").should eq true
       end
 
       it "works with two empty fields" do
-        User.validate_input_login("", "").should eq false
+        User.send(:empty_or_whitespace?, "", "").should eq true
       end
 
       it "works with correct fields" do
-        User.validate_input_login("a", "b").should eq true
+        User.send(:empty_or_whitespace?, "a", "b").should eq false
+      end
+
+      it "works with whitespace" do
+        User.send(:empty_or_whitespace?, "   ", "b").should eq true
       end
     end
 
@@ -87,17 +89,17 @@ module PlaceFinder
 
     describe 'is_username_available' do
       it 'returns true if there are no users in the database' do
-        User.is_username_available('username').should eq true
+        User.send(:is_username_available, 'username').should eq true
       end
 
       it 'returns true if there is no user with this username' do
         FactoryGirl.create(:user)
-        User.is_username_available('username1').should eq true
+        User.send(:is_username_available, 'username1').should eq true
       end
 
       it 'returns false if the username has already been used' do
         FactoryGirl.create(:user)
-        User.is_username_available('username').should eq false
+        User.send(:is_username_available, 'username').should eq false
       end
     end
 
@@ -119,6 +121,28 @@ module PlaceFinder
       it 'raises exception if there already exists a user with the same username' do
         FactoryGirl.create(:user)
         ->{ User.register_user("username", "password", "password", "Name") }.should raise_error UsernameDuplicate
+      end
+    end
+
+    describe 'id_from_username' do
+      it "returns nil if there is no such user" do
+        User.id_from_username("a").should eq nil
+      end
+
+      it "returns the correct id if there is a user with this username" do
+        user = FactoryGirl.create(:user)
+        User.id_from_username(user.username).should eq user.id
+      end
+    end
+
+    describe 'username_from_id' do
+      it "returns nil if there is no such user" do
+        User.username_from_id(1).should eq nil
+      end
+
+      it "returns the correct id if there is a user with this username" do
+        user = FactoryGirl.create(:user)
+        User.username_from_id(user.id).should eq user.username
       end
     end
   end

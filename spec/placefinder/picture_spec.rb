@@ -1,5 +1,4 @@
-require_relative '../../spec/rspec_config'
-require_relative '../../models/picture'
+require_relative '../spec_helper'
 
 module PlaceFinder
   describe "Picture" do

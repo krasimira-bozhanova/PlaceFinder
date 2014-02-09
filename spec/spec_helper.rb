@@ -1,5 +1,11 @@
 require 'database_cleaner'
 require 'rspec'
+require 'digest/sha1'
+require 'date'
+
+ENV['environment'] = 'test'
+
+require_relative '../models/placefinder'
 
 RSpec.configure do |config|
   config.before(:suite) do
@@ -15,10 +21,6 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 end
-
-# Set up a testing envoronment and off we go
-ENV['environment'] = 'test'
-require_relative '../db/connect'
 
 # Set up FactoryGirl
 require 'factory_girl'

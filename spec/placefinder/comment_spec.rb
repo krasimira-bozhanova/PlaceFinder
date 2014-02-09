@@ -1,5 +1,4 @@
-require_relative '../../spec/rspec_config'
-require_relative '../../models/comment'
+require_relative '../spec_helper'
 
 module PlaceFinder
   describe "Comment" do
@@ -26,6 +25,20 @@ module PlaceFinder
         comment2 = FactoryGirl.create(:comment2)
         Comment.comments_of_place(1).size.should eq 2
         Comment.comments_of_place(1).should eq [comment1, comment2]
+      end
+    end
+
+    describe "validate_comment" do
+      it "works with an empty comment" do
+        Comment.validate_comment("").should eq false
+      end
+
+      it "works with correct non-empty comment" do
+        Comment.validate_comment("a").should eq true
+      end
+
+      it "works with whitespace" do
+        Comment.validate_comment("   ").should eq false
       end
     end
   end

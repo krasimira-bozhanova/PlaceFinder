@@ -16,7 +16,7 @@ module PlaceFinder
 
     post '/comment' do
       @comment = params[:comment_text]
-      if not @comment.empty?
+      if Comment.validate_comment(@comment)
         Comment.add_comment :user_id => User.current_user.id,
                             :place_id => params[:place_id].to_i,
                             :comment => @comment
@@ -34,11 +34,7 @@ module PlaceFinder
       @pictures_for_place = Picture.pictures_for_place(@place.id)
       @comments = Comment.comments_of_place(@place.id)
       rating = Rating.rating_of_place @place.id
-      if rating == nil
-        @rating = "За това място все още не е гласувано"
-      else
-        @rating = rating
-      end
+      @rating = rating == nil ? "Все още не е гласувано" : rating
       @voted_already = Rating.voted_already?(User.current_user.id, @place.id)
       erb :show_place
     end

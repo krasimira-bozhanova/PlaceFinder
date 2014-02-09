@@ -1,6 +1,4 @@
-require_relative '../../spec/rspec_config'
-require_relative '../../models/place'
-require_relative '../../models/rating'
+require_relative '../spec_helper'
 
 module PlaceFinder
   describe "Place" do
@@ -13,26 +11,6 @@ module PlaceFinder
             :type_id => 1,
             :residential_complex_id => 1)
         end.to change(Place, :count).by(1)
-      end
-    end
-
-    describe 'get_place' do
-      it 'gets the correct place' do
-        place = FactoryGirl.create(:place)
-        Place.get_place(
-          :name => "Cool place",
-          :address_id => 1,
-          :type_id => 1
-          ).should eq place
-      end
-
-      it 'returns nil is there is no places in the database' do
-        Place.get_place(:name => "Cool place", :address_id => 1, :type_id => 1).should eq nil
-      end
-
-      it 'returns nil is there is no such place' do
-        FactoryGirl.create(:place)
-        Place.get_place(:name => "Cool place", :address_id => 2, :type_id => 1).should eq nil
       end
     end
 

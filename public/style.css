@@ -227,6 +227,6 @@ div.leftpanel .inquiry {
 #tabs { font: 0.8em Arial, sans-serif; }
 #tabs { padding: 0; }
 #tabs li { display: inline; }
-#tabs li a { background: #333333; padding: 10px; float:left; border-right: 1px solid #ccf; border-bottom: none; text-decoration: none; color: #000; font-weight: bold;}
+#tabs li a { background: #9f5942; padding: 10px; float:left; border-right: 1px solid #ccf; border-bottom: none; text-decoration: none; color: #000; font-weight: bold;}
 #tabs li.active a { background: #eef; }
 .content { float: left; clear: both; padding: 10px 20px 20px; width: 570px; }
