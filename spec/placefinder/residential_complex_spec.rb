@@ -10,14 +10,14 @@ module PlaceFinder
       end
     end
 
-    describe "residential_complex_name_by_id" do
+    describe "residential_complex_name" do
       it "gets the name if the residential_complex with this id exists" do
         residential_complex = FactoryGirl.create(:residential_complex)
-        ResidentialComplex.residential_complex_name_by_id(1).should eq residential_complex.name
+        ResidentialComplex.residential_complex_name(1).should eq residential_complex.name
       end
 
       it "returns nil if there is no such residential_complex" do
-        ResidentialComplex.residential_complex_name_by_id(1).should eq nil
+        ResidentialComplex.residential_complex_name(1).should eq nil
       end
     end
   end
