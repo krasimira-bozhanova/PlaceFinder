@@ -12,8 +12,8 @@ module PlaceFinder
     end
 
     get "/favourites" do
-      favourite_places_ids = Favourite.favourite_places_for_user(User.current_user.id)
-      @favourite_places = favourite_places_ids.map { |place_id| Place.place_by_id place_id }
+      places_ids = Favourite.favourite_places_for_user(User.current_user.id)
+      @favourite_places = places_ids.map { |id| Place.place_by_id id }
       erb :favourites
     end
   end

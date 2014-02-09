@@ -161,6 +161,7 @@ div.leftpanel .header {
 .category_name {
     margin-top:10px;
     margin-bottom:10px;
+    padding-left:5px;
 }
 
 .favourite {
@@ -207,7 +208,6 @@ div.leftpanel .inquiry {
 }
 
 .inquiry a, .inquiry a:link, .inquiry a:visited, .inquiry a:hover { text-decoration:none; }
-
 
 .clearfix {
   *zoom: 1;

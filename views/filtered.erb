@@ -1,4 +1,10 @@
 <div class="mainpanel">
+  <div class="category_name">
+    <h1>Резултати от търсенето</h1>
+  </div>
+  <% if @result_places.empty? %>
+    Няма такива заведения.
+  <% else %>
   <% @result_places.each do |place| %>
   <div class="text_">
     <h1><a href="http://www.free-css.com/"><%= place.name %> </a></h1>
@@ -8,7 +14,8 @@
 
     <div class="clearfix"></div>
 
-    <h2><a href="http://www.free-css.com/"><img src="/img/more.gif" alt="" />Read more</a></h2>
+    <h2><a href="/<%= place.id %>"><img src="/img/more.gif" alt="" />Read more</a></h2>
   </div>
+  <% end %>
   <% end %>
 </div>

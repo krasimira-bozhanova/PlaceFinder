@@ -8,7 +8,11 @@ module PlaceFinder
 
     post "/search" do
       type, zhk = [params[:type], params[:zhk]].map(&:to_i)
-      @result_places = Place.filter(type, zhk)
+      if type == 0  and zhk == 0
+        @result_places = Place.all
+      else
+        @result_places = Place.filter(type, zhk)
+      end
       erb :filtered
     end
   end
