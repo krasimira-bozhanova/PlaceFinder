@@ -10,18 +10,16 @@ module PlaceFinder
       # If a picture or the place is not specified
       # then it is given a defaulf one
       def add_place(name:, address_id:, type_id:, residential_complex_id:,
-                    main_picture_path:"", description: nil)
+                    main_picture_path:"img1.png", description: nil)
         unless name.empty? or type_id < 1 or
           residential_complex_id < 1 or address_id < 1
-          main_picture_path = 'img1.png' if main_picture_path.empty?
 
-          create(:name => name,
-                 :address_id => address_id,
-                 :type_id => type_id,
-                 :description => description,
-                 :date => DateTime.now,
-                 :residential_complex_id => residential_complex_id,
-                 :main_picture_path => main_picture_path)
+          create(
+            :name => name, :address_id => address_id, :type_id => type_id,
+            :description => description, :date => DateTime.now,
+            :residential_complex_id => residential_complex_id,
+            :main_picture_path => main_picture_path
+            )
         end
       end
 

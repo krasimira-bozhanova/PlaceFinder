@@ -10,7 +10,7 @@ module PlaceFinder
       end
 
       # Returns the residential complex name for a given id
-      def residential_complex_name_by_id(id)
+      def residential_complex_name(id)
         unless where(:id => id).empty?
           where(:id => id).first.name
         end

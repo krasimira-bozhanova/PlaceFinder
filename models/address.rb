@@ -27,9 +27,10 @@ module PlaceFinder
       # Gets an address_id with according to the parameters
       # If no such address is found then returns nil
       def address_id(residential_complex_id:, street:, street_number:)
-        filtered_result = where(:residential_complex_id => residential_complex_id,
-                              :street => street,
-                              :street_number => street_number)
+        filtered_result = where(
+          :residential_complex_id => residential_complex_id,
+          :street => street,
+          :street_number => street_number)
         unless filtered_result.empty?
           filtered_result.first.id
         end
