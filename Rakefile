@@ -84,4 +84,22 @@ namespace :tests do
     t.pattern = FileList['spec/placefinder/*_spec.rb']
   end
 
+  desc 'Run skeptic on all files'
+  task :skeptic do
+    opts = YAML.load_file('skeptic.yml')
+        .map { |key, value| [key, (value == true ? nil : value)].compact }
+        .map { |key, value| "--#{key.tr('_', '-')} #{value}".strip }
+        .join(' ')
+
+    directories = [
+      File.join(File.dirname(__FILE__), 'models', '*.rb'),
+      File.join(File.dirname(__FILE__), 'routes', '*.rb')]
+    directories.each do |directory|
+      Dir.glob(directory).each do |file|
+        puts "skeptic  #{opts} #{file}"
+        system("skeptic  #{opts} #{file}") or exit(1)
+      end
+    end
+  end
+
 end
